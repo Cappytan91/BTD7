@@ -10,7 +10,7 @@ import static com.jason.btd7.helpers.Clock.*;
 
 public class Enemy {
 
-    private int width, height, health;
+    private int width, height, health, currentCheckpoint;
     private float speed, x, y;
     private Tile startTile;
     private Texture texture;
@@ -37,18 +37,86 @@ public class Enemy {
         //y direction
         this.directions[1] = 0;
         directions = FindNextD(startTile);
-
+        this.currentCheckpoint = 0;
+        PopulateCheckpointList();
     }
 
     public void Update(){
         if(first){
             first = false;
         }else{
+            if(CheckpointReached()){
+                currentCheckpoint++;
+            }else {
+                x += Delta() * checkpoints.get(currentCheckpoint).getxDirection();
+                y += Delta() * checkpoints.get(currentCheckpoint).getyDirection();
+
+            }
+
             x += Delta() * directions[0];
             y += Delta() * directions[1];
 
         }
     }
+
+    private boolean CheckpointReached(){
+        boolean reached = false;
+        Tile t = checkpoints.get(currentCheckpoint).getTile();
+        // check if position reached tile within variance of 3 (arbitrary)
+        if(x > t.getX() - 3 && x < t.getX() + 3 && y > t.getY() - 3 && y < t.getY() + 3){
+            reached = true;
+            x = t.getX();
+            y = t.getY();
+
+        }
+
+        return reached;
+    }
+
+    private void PopulateCheckpointList(){
+        checkpoints.add(FindNextC(startTile, directions = FindNextD(startTile)));
+
+        int counter = 0;
+        boolean cont = true;
+        while (cont){
+            int[] currentD = FindNextD(checkpoints.get(counter).getTile());
+            // check if next direction / checkpoint exists, end after 20 checkpoints
+            if(currentD[0] == 2 || counter == 20){
+                cont = false;
+            }else{
+                checkpoints.add(FindNextC(checkpoints.get(counter).getTile(), directions = FindNextD(checkpoints.get(counter).getTile())));
+
+            }
+            counter++;
+        }
+
+    }
+
+    private Checkpoint FindNextC(Tile s, int[] dir){
+        Tile next = null;
+        Checkpoint c = null;
+        // Boolean to decide if next checkpoint is found
+        boolean found = false;
+
+        // int to increase after each loop
+        int counter = 1;
+
+        while(!found){
+
+            if(s.getType() != grid.GetTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter).getType()){
+                found = true;
+                // move counter back 1 to find tile before new tiletype
+                counter -= 1;
+                next = grid.GetTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter);
+
+            }
+            counter++;
+        }
+        c = new Checkpoint(next, dir[0], dir[1]);
+
+        return c;
+    }
+
 
     private int[] FindNextD(Tile s){
         int[] dir = new int[2];
@@ -69,6 +137,11 @@ public class Enemy {
         }else if (s.getType() == l.getType()){
             dir[0] = -1;
             dir[1] = 0;
+        }else{
+            dir[0] = 2;
+            dir[1] = 2;
+            System.out.println("NO DIRECTION FOUND!!");
+
         }
 
 
