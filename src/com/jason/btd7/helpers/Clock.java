@@ -17,6 +17,10 @@ public class Clock {
         int delta = (int) (currentTime - lastFrame);
         lastFrame = getTime();
 
+        if(delta * 0.01f > 0.5){
+            return 0.5f;
+        }
+
         return delta * 0.01f;
     }
 
