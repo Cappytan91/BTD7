@@ -9,6 +9,18 @@ public class Checkpoint {
         this.tile = tile;
         this.xDirection = xDirection;
         this.yDirection = yDirection;
+
     }
 
+    public Tile getTile() {
+        return tile;
+    }
+
+    public int getxDirection() {
+        return xDirection;
+    }
+
+    public int getyDirection() {
+        return yDirection;
+    }
 }

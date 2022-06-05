@@ -2,6 +2,8 @@ package com.jason.btd7;
 
 import org.newdawn.slick.opengl.Texture;
 
+import java.util.ArrayList;
+
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Clock.*;
 
@@ -15,6 +17,9 @@ public class Enemy {
     private boolean first = true;
     private TileGrid grid;
 
+    private ArrayList<Checkpoint> checkpoints;
+    private int[] directions;
+
     public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed){
         this.startTile = startTile;
         this.grid = grid;
@@ -24,18 +29,53 @@ public class Enemy {
         this.height = height;
         this.texture = texture;
         this.speed = speed;
+
+        this.checkpoints = new ArrayList<Checkpoint>();
+        this.directions = new int[2];
+        //x direction
+        this.directions[0] = 0;
+        //y direction
+        this.directions[1] = 0;
+        directions = FindNextD(startTile);
+
     }
 
     public void Update(){
         if(first){
             first = false;
         }else{
-            if(pathContinues()) {
-                x += Delta() * speed;
-            }
+            x += Delta() * directions[0];
+            y += Delta() * directions[1];
+
         }
     }
 
+    private int[] FindNextD(Tile s){
+        int[] dir = new int[2];
+        Tile u = grid.GetTile(s.getXPlace(), s.getYPlace() - 1);
+        Tile r = grid.GetTile(s.getXPlace() + 1, s.getYPlace() );
+        Tile d = grid.GetTile(s.getXPlace(), s.getYPlace() + 1);
+        Tile l = grid.GetTile(s.getXPlace() - 1, s.getYPlace());
+
+        if(s.getType() == u.getType()){
+            dir[0] = 0;
+            dir[1] = -1;
+        }else if (s.getType() == r.getType()){
+            dir[0] = 1;
+            dir[1] = 0;
+        }else if (s.getType() == d.getType()){
+            dir[0] = 0;
+            dir[1] = 1;
+        }else if (s.getType() == l.getType()){
+            dir[0] = -1;
+            dir[1] = 0;
+        }
+
+
+        return dir;
+    }
+
+/*
     private boolean pathContinues(){
         boolean answer = true;
 
@@ -48,6 +88,8 @@ public class Enemy {
 
         return answer;
     }
+    */
+
 
     public void Draw(){
         DrawQuadTex(texture, x, y, width, height);
