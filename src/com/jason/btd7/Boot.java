@@ -40,7 +40,7 @@ public class Boot {
 
         grid.SetTile(12, 0, grid.GetTile(11, 0).getType());
 
-        Enemy e = new Enemy(QuickLoad("bad"), grid.GetTile(10, 6), grid, 64, 64, 6);
+        Enemy e = new Enemy(QuickLoad("bad"), grid.GetTile(10, 6), grid, 64, 64, 15);
         Wave wave = new Wave(10, e);
         Player player = new Player(grid);
         while(!Display.isCloseRequested()){

@@ -4,7 +4,8 @@ public enum TileType {
 
     Grass("grass", true),
     Dirt("dirt", true),
-    Water("water", false);
+    Water("water", false),
+    NULL("water", false);
 
     String textureName;
     boolean buildable;
@@ -13,5 +14,6 @@ public enum TileType {
         this.textureName = textureName;
         this.buildable = buildable;
     }
+
 
 }

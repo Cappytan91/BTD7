@@ -46,16 +46,16 @@ public class Enemy {
             first = false;
         }else{
             if(CheckpointReached()){
-                currentCheckpoint++;
+                if(currentCheckpoint + 1 == checkpoints.size()){
+                    System.out.println("Reached maze end");
+                }else{
+                    currentCheckpoint++;
+                }
             }else {
-                x += Delta() * checkpoints.get(currentCheckpoint).getxDirection();
-                y += Delta() * checkpoints.get(currentCheckpoint).getyDirection();
+                x += Delta() * checkpoints.get(currentCheckpoint).getxDirection() * speed;
+                y += Delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed;
 
             }
-
-            x += Delta() * directions[0];
-            y += Delta() * directions[1];
-
         }
     }
 
@@ -103,7 +103,7 @@ public class Enemy {
 
         while(!found){
 
-            if(s.getType() != grid.GetTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter).getType()){
+            if(s.getXPlace() + dir[0] * counter == grid.getTilesWide() || s.getYPlace() + dir[1] * counter == grid.getTilesHigh() || s.getType() != grid.GetTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter).getType()){
                 found = true;
                 // move counter back 1 to find tile before new tiletype
                 counter -= 1;
@@ -125,16 +125,16 @@ public class Enemy {
         Tile d = grid.GetTile(s.getXPlace(), s.getYPlace() + 1);
         Tile l = grid.GetTile(s.getXPlace() - 1, s.getYPlace());
 
-        if(s.getType() == u.getType()){
+        if(s.getType() == u.getType() && directions[1] != 1){
             dir[0] = 0;
             dir[1] = -1;
-        }else if (s.getType() == r.getType()){
+        }else if (s.getType() == r.getType() && directions[0] != -1){
             dir[0] = 1;
             dir[1] = 0;
-        }else if (s.getType() == d.getType()){
+        }else if (s.getType() == d.getType() && directions[1] != -1){
             dir[0] = 0;
             dir[1] = 1;
-        }else if (s.getType() == l.getType()){
+        }else if (s.getType() == l.getType() && directions[1] != 1){
             dir[0] = -1;
             dir[1] = 0;
         }else{
