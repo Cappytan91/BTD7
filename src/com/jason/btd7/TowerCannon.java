@@ -15,7 +15,7 @@ public class TowerCannon {
         this.startTile = startTile;
         this.x = startTile.getX();
         this.x = startTile.getY();
-        this.damage = damage
+        this.damage = damage;
     }
 
     public void update(){
