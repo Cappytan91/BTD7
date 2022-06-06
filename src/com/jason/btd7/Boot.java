@@ -36,24 +36,12 @@ public class Boot {
 
         };
 
-        TileGrid grid = new TileGrid(map);
-
-        grid.SetTile(12, 0, grid.GetTile(11, 0).getType());
-
-        Enemy e = new Enemy(QuickLoad("bad"), grid.GetTile(10, 6), grid, 64, 64, 15);
-        Wave wave = new Wave(10, e);
-        Player player = new Player(grid);
-
-        TowerCannon tower = new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(5, 7), 10);
+        Game game = new Game(map);
 
         while(!Display.isCloseRequested()){
             Clock.update();
 
-
-            grid.Draw();
-            wave.Update();
-            player.Update();
-            tower.update();
+            game.update();
 
             Display.update();
             Display.sync(60);
