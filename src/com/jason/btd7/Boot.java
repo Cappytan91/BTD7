@@ -44,7 +44,7 @@ public class Boot {
         Wave wave = new Wave(10, e);
         Player player = new Player(grid);
 
-        //TowerCannon tower = new TowerCannon()
+        TowerCannon tower = new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(5, 7), 10);
 
         while(!Display.isCloseRequested()){
             Clock.update();
@@ -53,7 +53,7 @@ public class Boot {
             grid.Draw();
             wave.Update();
             player.Update();
-
+            tower.draw();
 
             Display.update();
             Display.sync(60);

@@ -14,7 +14,9 @@ public class TowerCannon {
         this.texture = texture;
         this.startTile = startTile;
         this.x = startTile.getX();
-        this.x = startTile.getY();
+        this.y = startTile.getY();
+        this.width = (int) startTile.getWidth();
+        this.height = (int) startTile.getHeight();
         this.damage = damage;
     }
 
