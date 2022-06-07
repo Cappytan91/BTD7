@@ -12,15 +12,14 @@ public class Game {
 
     private float test;
     // Temp variables
-    TowerCannon tower;
+
 
     public Game(int[][] map){
 
         grid = new TileGrid(map);
-        player = new Player(grid);
         waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.GetTile(10, 6), grid, 64, 64, 60), 2, 2);
+        player = new Player(grid, waveManager);
 
-        tower = new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(5, 7), 10);
 
     }
 
@@ -28,9 +27,9 @@ public class Game {
 
         grid.Draw();
         waveManager.update();
-        player.Update();
+        player.update();
 
-        tower.update();
+
 
     }
 
