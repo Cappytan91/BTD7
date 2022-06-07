@@ -18,7 +18,7 @@ public class Game {
 
         grid = new TileGrid(map);
         player = new Player(grid);
-        waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.GetTile(10, 6), grid, 64, 64, 40), 4, 5);
+        waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.GetTile(10, 6), grid, 64, 64, 60), 2, 2);
 
         tower = new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(5, 7), 10);
 

@@ -1,5 +1,7 @@
 package com.jason.btd7;
 
+import org.lwjgl.Sys;
+
 public class WaveManager {
 
     private float timeSinceLastWave, timeBetweenEnemies;
@@ -20,13 +22,17 @@ public class WaveManager {
     }
 
     public void update(){
-        if(currentWave != null){
+        if(!currentWave.isCompleted()){
             currentWave.Update();
+        }else {
+            newWave();
         }
     }
 
     private void newWave(){
         currentWave = new Wave(enemyType, timeBetweenEnemies, enemiesPerWave);
+        waveNumber++;
+        System.out.println("starting wave " + waveNumber);
     }
 
 }
