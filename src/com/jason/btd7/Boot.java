@@ -2,6 +2,7 @@ package com.jason.btd7;
 
 
 import com.jason.btd7.helpers.Clock;
+import com.jason.btd7.helpers.StateManager;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -36,12 +37,13 @@ public class Boot {
 
         };
 
-        Game game = new Game(map);
+        //Game game = new Game(map);
 
         while(!Display.isCloseRequested()){
             Clock.update();
 
-            game.update();
+            //game.update();
+            StateManager.update();
 
             Display.update();
             Display.sync(60);
