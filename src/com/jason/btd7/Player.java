@@ -1,5 +1,6 @@
 package com.jason.btd7;
 
+import com.jason.btd7.helpers.Clock;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -50,7 +51,10 @@ public class Player {
         // Handle keyboard input
         while (Keyboard.next()){
             if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
-                moveIndex();
+                Clock.ChangeMultiplier(0.2f);
+            }
+            if(Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState()){
+                Clock.ChangeMultiplier(-0.2f);
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_T && Keyboard.getEventKeyState()){
                 towerList.add(new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(Mouse.getX() / 64, (HEIGHT - Mouse.getY() - 1) / 64), 10, waveManager.getCurrentWave().getEnemyList()));
