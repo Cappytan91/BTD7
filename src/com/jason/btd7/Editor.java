@@ -14,7 +14,7 @@ public class Editor {
     private TileType[] types;
 
     public Editor(){
-        this.grid = new TileGrid();
+        this.grid = loadMap("mapTest");
         this.index = 0;
 
         this.types = new TileType[3];
