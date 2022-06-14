@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import static com.jason.btd7.helpers.Artist.HEIGHT;
+import static com.jason.btd7.helpers.Leveler.*;
 
 
 public class Editor {
@@ -35,8 +36,8 @@ public class Editor {
             if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
                 moveIndex();
             }
-            if(Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState()){
-
+            if(Keyboard.getEventKey() == Keyboard.KEY_S && Keyboard.getEventKeyState()){
+                saveMap("mapTest", grid);
             }
         }
     }
