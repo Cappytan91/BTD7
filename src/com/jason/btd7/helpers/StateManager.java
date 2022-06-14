@@ -38,22 +38,24 @@ public class StateManager {
 
         switch (gameState){
             case MAINMENU:
-                if(mainMenu == null){
+                if(mainMenu == null)
                     mainMenu = new MainMenu();
-                }
+
                 mainMenu.update();
                 break;
 
             case GAME:
-                if(game == null){
+                if(game == null)
                     game = new Game(map);
 
-                }
                 game.update();
                 break;
 
             case EDITOR:
+                if(editor == null)
+                    editor = new Editor();
 
+                editor.update();
                 break;
         }
 

@@ -16,15 +16,21 @@ public class MainMenu {
         background = QuickLoad("mainmenu");
         menuUI = new UI();
         menuUI.addButton("Play", "playbutton", WIDTH / 2 - 128, (int) (HEIGHT * 0.64f));
-        menuUI.addButton("Edit", "editorbutton", WIDTH / 3 - 128, (int) (HEIGHT * 0.74f));
-        menuUI.addButton("quit", "quitbutton", WIDTH * 2 / 3 - 128, (int) (HEIGHT * 0.74f));
+        menuUI.addButton("Editor", "editorbutton", WIDTH / 3 - 128, (int) (HEIGHT * 0.74f));
+        menuUI.addButton("Quit", "quitbutton", WIDTH * 2 / 3 - 128, (int) (HEIGHT * 0.74f));
     }
 
     public void updateButtons(){
         if(Mouse.isButtonDown(0)){
-            if(menuUI.isButtonClicked("Play")){
+            if(menuUI.isButtonClicked("Play"))
                 StateManager.setState(StateManager.GameState.GAME);
-            }
+
+            if(menuUI.isButtonClicked("Editor"))
+                StateManager.setState(StateManager.GameState.EDITOR);
+
+            if(menuUI.isButtonClicked("Quit"))
+                System.exit(0);
+
         }
     }
 

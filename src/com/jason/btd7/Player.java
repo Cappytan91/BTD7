@@ -30,10 +30,6 @@ public class Player {
         this.leftMouseButtonDown = false;
     }
 
-    public void setTile(){
-        grid.SetTile((int) Math.floor(Mouse.getX() / 64),
-                (int) Math.floor((HEIGHT - Mouse.getY() - 1) / 64), types[index] );
-    }
 
     public void update(){
         for(TowerCannon t : towerList){
@@ -63,12 +59,6 @@ public class Player {
 
     }
 
-    private void moveIndex(){
-        index++;
-        if(index > types.length - 1){
-            index = 0;
-        }
-    }
 
 
 
