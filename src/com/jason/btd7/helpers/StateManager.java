@@ -47,7 +47,9 @@ public class StateManager {
             case GAME:
                 if(game == null){
                     game = new Game(map);
+
                 }
+                game.update();
                 break;
 
             case EDITOR:
