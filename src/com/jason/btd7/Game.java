@@ -16,7 +16,7 @@ public class Game {
     public Game(int[][] map){
 
         grid = new TileGrid(map);
-        waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.GetTile(10, 6), grid, 64, 64, 60), 2, 2);
+        waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.GetTile(10, 6), grid, 64, 64, 60, 25), 2, 2);
         player = new Player(grid, waveManager);
 
 
