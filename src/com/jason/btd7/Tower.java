@@ -1,11 +1,24 @@
 package com.jason.btd7;
 
 
-public class Tower implements Entity{
+import org.newdawn.slick.opengl.Texture;
+
+import static com.jason.btd7.helpers.Artist.DrawQuadTex;
+
+public abstract class Tower implements Entity{
 
     private float x, y;
-    private int width, height;
+    private int width, height, damage;
+    private Enemy target;
+    private Texture texture;
 
+    public Tower(Texture texture, float x, float y, int width, int height){
+        this.texture = texture;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
 
     public float getX() {
         return x;
@@ -44,6 +57,6 @@ public class Tower implements Entity{
     }
 
     public void draw() {
-
+        DrawQuadTex(texture, x, y, width, height);
     }
 }

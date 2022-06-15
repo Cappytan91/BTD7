@@ -19,7 +19,7 @@ public class TowerCannon {
 
     public TowerCannon(Texture baseTexture, Tile startTile, int damage, int range, ArrayList<Enemy> enemies){
         this.baseTexture = baseTexture;
-        this.cannonTexture = QuickLoad("cannonGun");
+        this.cannonTexture = QuickLoad("cannonGunBlue");
         this.startTile = startTile;
         this.x = startTile.getX();
         this.y = startTile.getY();

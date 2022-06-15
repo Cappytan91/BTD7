@@ -36,7 +36,7 @@ public class Player {
 
         // Handle mouse input
         if(Mouse.isButtonDown(0) && !leftMouseButtonDown){
-            towerList.add(new TowerCannon(QuickLoad("cannonBase"), grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE), 10, 1000, waveManager.getCurrentWave().getEnemyList()));
+            towerList.add(new TowerCannon(QuickLoad("cannonBaseBlue"), grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE), 10, 1000, waveManager.getCurrentWave().getEnemyList()));
             //setTile();
         }
 
