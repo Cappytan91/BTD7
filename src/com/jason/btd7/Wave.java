@@ -2,6 +2,7 @@ package com.jason.btd7;
 
 import java.util.ArrayList;
 
+import static com.jason.btd7.helpers.Artist.TILE_SIZE;
 import static com.jason.btd7.helpers.Clock.*;
 
 public class Wave {
@@ -20,15 +21,15 @@ public class Wave {
         this.enemyList = new ArrayList<Enemy>();
         this.waveCompleted = false;
 
-        Spawn();
+        spawn();
     }
 
-    public void Update(){
+    public void update(){
         boolean allEnemiesDead = true;
         if(enemyList.size() < enemiesPerWave) {
             timeSinceLastSpawn += Delta();
             if (timeSinceLastSpawn > spawnTime) {
-                Spawn();
+                spawn();
                 timeSinceLastSpawn = 0;
             }
         }
@@ -45,8 +46,8 @@ public class Wave {
         }
     }
 
-    private void Spawn(){
-        enemyList.add(new Enemy(enemyType.getTexture(), enemyType.getStartTile(), enemyType.getTileGrid(), 64, 64, enemyType.getSpeed(), enemyType.getHealth()));
+    private void spawn(){
+        enemyList.add(new Enemy(enemyType.getTexture(), enemyType.getStartTile(), enemyType.getTileGrid(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth()));
     }
 
 

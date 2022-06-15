@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import static com.jason.btd7.helpers.Artist.HEIGHT;
+import static com.jason.btd7.helpers.Artist.TILE_SIZE;
 import static com.jason.btd7.helpers.Leveler.*;
 
 
@@ -24,7 +25,7 @@ public class Editor {
     }
 
     public void update(){
-        grid.Draw();
+        grid.draw();
         viewTile();
 
         // Handle mouse input
@@ -45,25 +46,25 @@ public class Editor {
 
 
     private void setTile(){
-        grid.SetTile((int) Math.floor(Mouse.getX() / 64),
-                (int) Math.floor((HEIGHT - Mouse.getY() - 1) / 64), types[index] );
+        grid.setTile((int) Math.floor(Mouse.getX() / TILE_SIZE),
+                (int) Math.floor((HEIGHT - Mouse.getY() - 1) / TILE_SIZE), types[index] );
     }
 
     private void viewTile(){
         Tile t = null;
 
         if(types[index] == TileType.Grass){
-            t = new Tile((float) Math.floor(Mouse.getX() /64 * 64), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / 64 * 64), 64, 64, TileType.GrassE);
+            t = new Tile((float) Math.floor(Mouse.getX() /TILE_SIZE * TILE_SIZE), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / TILE_SIZE * TILE_SIZE), TILE_SIZE, TILE_SIZE, TileType.GrassE);
 
         }else if(types[index] == TileType.Dirt){
-            t = new Tile((float) Math.floor(Mouse.getX() /64 * 64), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / 64 * 64), 64, 64, TileType.DirtE);
+            t = new Tile((float) Math.floor(Mouse.getX() /TILE_SIZE * TILE_SIZE), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / TILE_SIZE * TILE_SIZE), TILE_SIZE, TILE_SIZE, TileType.DirtE);
 
         }else if(types[index] == TileType.Water){
-            t = new Tile((float) Math.floor(Mouse.getX() /64 * 64), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / 64 * 64), 64, 64, TileType.WaterE);
+            t = new Tile((float) Math.floor(Mouse.getX() /TILE_SIZE * TILE_SIZE), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / TILE_SIZE * TILE_SIZE), TILE_SIZE, TILE_SIZE, TileType.WaterE);
 
         }
 
-        t.Draw();
+        t.draw();
 
 
 

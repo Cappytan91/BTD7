@@ -15,6 +15,8 @@ import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 
 public class Artist {
     public static final int WIDTH = 1280, HEIGHT = 960;
+    public static final int TILE_SIZE = 64;
+
 
     public static void BeginSession(){
 

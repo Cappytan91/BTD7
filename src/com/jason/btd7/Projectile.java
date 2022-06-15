@@ -2,8 +2,7 @@ package com.jason.btd7;
 
 import org.newdawn.slick.opengl.Texture;
 
-import static com.jason.btd7.helpers.Artist.CheckCollision;
-import static com.jason.btd7.helpers.Artist.DrawQuadTex;
+import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Clock.*;
 
 public class Projectile {
@@ -32,8 +31,8 @@ public class Projectile {
 
     private void calculateDirection(){
         float totalAllowedMovement = 1.0f;
-        float xDistanceFromTarget = Math.abs(target.getX() - x -Game.TILE_SIZE / 4 + Game.TILE_SIZE / 2);
-        float yDistanceFromTarget = Math.abs(target.getY() - y - Game.TILE_SIZE / 4 + Game.TILE_SIZE / 2);
+        float xDistanceFromTarget = Math.abs(target.getX() - x -TILE_SIZE / 4 + TILE_SIZE / 2);
+        float yDistanceFromTarget = Math.abs(target.getY() - y - TILE_SIZE / 4 + TILE_SIZE / 2);
         float totalDistanceFromTarget = xDistanceFromTarget + yDistanceFromTarget;
         float xPercentOfMovement = xDistanceFromTarget / totalDistanceFromTarget;
         xVelocity = xPercentOfMovement;

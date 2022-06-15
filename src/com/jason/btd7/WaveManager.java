@@ -23,7 +23,7 @@ public class WaveManager {
 
     public void update(){
         if(!currentWave.isCompleted()){
-            currentWave.Update();
+            currentWave.update();
         }else {
             newWave();
         }
