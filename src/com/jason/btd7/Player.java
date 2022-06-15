@@ -30,15 +30,15 @@ public class Player {
         this.leftMouseButtonDown = false;
     }
 
-
     public void update(){
         for(TowerCannon t : towerList){
             t.update();
+            t.updateEnemyList(waveManager.getCurrentWave().getEnemyList());
         }
 
         // Handle mouse input
         if(Mouse.isButtonDown(0) && !leftMouseButtonDown){
-            towerList.add(new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(Mouse.getX() / 64, (HEIGHT - Mouse.getY() - 1) / 64), 10, waveManager.getCurrentWave().getEnemyList()));
+            towerList.add(new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(Mouse.getX() / 64, (HEIGHT - Mouse.getY() - 1) / 64), 10, 1000, waveManager.getCurrentWave().getEnemyList()));
             //setTile();
         }
 
@@ -53,7 +53,7 @@ public class Player {
                 Clock.ChangeMultiplier(-0.2f);
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_T && Keyboard.getEventKeyState()){
-                towerList.add(new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(Mouse.getX() / 64, (HEIGHT - Mouse.getY() - 1) / 64), 10, waveManager.getCurrentWave().getEnemyList()));
+                towerList.add(new TowerCannon(QuickLoad("cannonBase"), grid.GetTile(Mouse.getX() / 64, (HEIGHT - Mouse.getY() - 1) / 64), 10, 1000, waveManager.getCurrentWave().getEnemyList()));
             }
         }
 
