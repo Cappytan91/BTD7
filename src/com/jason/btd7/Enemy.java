@@ -8,7 +8,7 @@ import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Clock.*;
 
 
-public class Enemy {
+public class Enemy implements Entity{
 
     private int width, height, health, currentCheckpoint;
     private float speed, x, y;
@@ -42,7 +42,7 @@ public class Enemy {
         PopulateCheckpointList();
     }
 
-    public void Update(){
+    public void update(){
         if(first){
             first = false;
         }else{
@@ -161,7 +161,7 @@ public class Enemy {
     }
 
 
-    public void Draw(){
+    public void draw(){
         DrawQuadTex(texture, x, y, width, height);
     }
 
