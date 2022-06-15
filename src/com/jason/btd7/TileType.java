@@ -5,7 +5,13 @@ public enum TileType {
     Grass("grass", true),
     Dirt("dirt", true),
     Water("water", false),
-    NULL("water", false);
+    NULL("water", false),
+
+    // editor blocks
+
+    GrassE("grassE", false),
+    DirtE("dirtE", false),
+    WaterE("waterE", false);
 
     String textureName;
     boolean buildable;

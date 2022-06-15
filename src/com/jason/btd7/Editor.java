@@ -25,6 +25,7 @@ public class Editor {
 
     public void update(){
         grid.Draw();
+        viewTile();
 
         // Handle mouse input
         if(Mouse.isButtonDown(0)){
@@ -46,6 +47,26 @@ public class Editor {
     private void setTile(){
         grid.SetTile((int) Math.floor(Mouse.getX() / 64),
                 (int) Math.floor((HEIGHT - Mouse.getY() - 1) / 64), types[index] );
+    }
+
+    private void viewTile(){
+        Tile t = null;
+
+        if(types[index] == TileType.Grass){
+            t = new Tile((float) Math.floor(Mouse.getX() /64 * 64), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / 64 * 64), 64, 64, TileType.GrassE);
+
+        }else if(types[index] == TileType.Dirt){
+            t = new Tile((float) Math.floor(Mouse.getX() /64 * 64), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / 64 * 64), 64, 64, TileType.DirtE);
+
+        }else if(types[index] == TileType.Water){
+            t = new Tile((float) Math.floor(Mouse.getX() /64 * 64), (float) Math.floor((HEIGHT - Mouse.getY() - 1) / 64 * 64), 64, 64, TileType.WaterE);
+
+        }
+
+        t.Draw();
+
+
+
     }
 
     private void moveIndex(){
