@@ -5,7 +5,7 @@ import org.newdawn.slick.opengl.Texture;
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Clock.*;
 
-public class Projectile implements Entity {
+public abstract class Projectile implements Entity {
 
     private Texture texture;
     private float x, y, speed, xVelocity, yVelocity;
@@ -79,14 +79,18 @@ public class Projectile implements Entity {
         this.height =  height;
     }
 
+    public void doDamage(){
+        target.damage(damage);
+        alive = false;
+    }
+
     public void update(){
         if(alive) {
             x += xVelocity * speed * Delta();
             y += yVelocity * speed * Delta();
             if (CheckCollision(x, y, width, height,
                     target.getX(), target.getY(), target.getWidth(), target.getHeight())) {
-                target.damage(damage);
-                alive = false;
+                doDamage();
             }
             draw();
         }
@@ -95,6 +99,14 @@ public class Projectile implements Entity {
 
     public void draw(){
         DrawQuadTex(texture, x, y, 32, 32);
+    }
+
+    public Enemy getTarget(){
+        return target;
+    }
+
+    public void setAlive(boolean status){
+        alive = status;
     }
 
 

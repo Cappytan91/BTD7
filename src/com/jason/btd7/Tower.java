@@ -72,7 +72,7 @@ public abstract class Tower implements Entity{
 
     public void shoot(){
         timeSinceLastShot = 0;
-        projectiles.add(new Projectile(QuickLoad("bullet"), target, x + TILE_SIZE / 2 - TILE_SIZE / 4, y + TILE_SIZE / 2 - TILE_SIZE / 4, 32, 32, 1000, damage));
+        projectiles.add(new ProjectileIceBall(QuickLoad("bullet"), target, x + TILE_SIZE / 2 - TILE_SIZE / 4, y + TILE_SIZE / 2 - TILE_SIZE / 4, 32, 32, 1000, damage));
     }
 
     public void updateEnemyList(ArrayList<Enemy> newList){
