@@ -15,6 +15,7 @@ public class Game {
         grid = new TileGrid(map);
         waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.getTile(10, 6), grid, TILE_SIZE, TILE_SIZE, 60, 25), 2, 2);
         player = new Player(grid, waveManager);
+        player.setup();
 
 
     }
