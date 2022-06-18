@@ -1,5 +1,9 @@
-package com.jason.btd7;
+package com.jason.btd7.Towers;
 
+import com.jason.btd7.Enemy;
+import com.jason.btd7.Projectile;
+import com.jason.btd7.Projectiles.ProjectileIceBall;
+import com.jason.btd7.Tile;
 import org.newdawn.slick.opengl.Texture;
 
 import java.util.ArrayList;
