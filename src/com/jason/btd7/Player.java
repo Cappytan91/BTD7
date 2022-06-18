@@ -1,5 +1,7 @@
 package com.jason.btd7;
 
+import com.jason.btd7.Towers.TowerCannonBlue;
+import com.jason.btd7.Towers.TowerIce;
 import com.jason.btd7.helpers.Clock;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
