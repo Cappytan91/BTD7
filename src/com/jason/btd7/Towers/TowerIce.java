@@ -7,13 +7,14 @@ import com.jason.btd7.Tower;
 import com.jason.btd7.TowerType;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.jason.btd7.helpers.Artist.QuickLoad;
 import static com.jason.btd7.helpers.Artist.TILE_SIZE;
 
 public class TowerIce extends Tower {
 
-    public TowerIce(TowerType type, Tile startTile, ArrayList<Enemy> enemies) {
+    public TowerIce(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies) {
         super(type, startTile, enemies);
     }
 
