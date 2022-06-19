@@ -21,6 +21,6 @@ public class TowerIce extends Tower {
     @Override
     public void shoot(){
         setTimeSinceLastShot(0);
-        getProjectiles().add(new ProjectileIceBall(QuickLoad("iceBullet"), getTarget(), getX() + TILE_SIZE / 2 - TILE_SIZE / 4, getY() + TILE_SIZE / 2 - TILE_SIZE / 4, 32, 32, 1000, getDamage()));
+        super.addProjectile("iceBullet");
     }
 }

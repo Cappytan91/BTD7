@@ -36,7 +36,7 @@ public class Player {
     }
 
     public void setup(){
-        Cash = 50;
+        Cash = 75;
         Lives = 10;
     }
 
