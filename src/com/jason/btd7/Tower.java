@@ -39,6 +39,10 @@ public abstract class Tower implements Entity{
         this.angle = 0f;
     }
 
+    public Tower() {
+
+    }
+
     private Enemy acquireTarget(){
         Enemy closest = null;
 
@@ -120,6 +124,14 @@ public abstract class Tower implements Entity{
         if(textures.length > 1)
             for(int i = 1; i < textures.length; i++)
                 DrawQuadTexRot(textures[i], x, y, width, height, angle);
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
     }
 
     public float getX() {

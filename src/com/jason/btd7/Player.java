@@ -1,9 +1,8 @@
 package com.jason.btd7;
 
-import com.jason.btd7.Towers.TowerCannonBlue;
+import com.jason.btd7.Towers.TowerFire;
 import com.jason.btd7.Towers.TowerIce;
 import com.jason.btd7.helpers.Clock;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -16,7 +15,7 @@ public class Player {
     private TileGrid grid;
     private TileType[] types;
     private WaveManager waveManager;
-    private ArrayList<Tower> towerList;
+    public static ArrayList<Tower> towerList;
     private boolean leftMouseButtonDown, rightMouseButtonDown;
     public static int Cash, Lives;
 
@@ -64,8 +63,12 @@ public class Player {
         // Handle mouse input
         if(Mouse.isButtonDown(0) && !leftMouseButtonDown){
 
-            if(modifyCash(-20))
-                towerList.add(new TowerCannonBlue(TowerType.CannonBlue, grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE), waveManager.getCurrentWave().getEnemyList()));
+            if(modifyCash(-20)){
+                towerList.add(new TowerFire(TowerType.FireTower, grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE), waveManager.getCurrentWave().getEnemyList()));
+
+            }
+                //towerList.add(new TowerCannonBlue(TowerType.CannonBlue, grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE), waveManager.getCurrentWave().getEnemyList()));
+
         }
         if(Mouse.isButtonDown(1) && !rightMouseButtonDown){
             if(modifyCash(-55))

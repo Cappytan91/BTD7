@@ -12,6 +12,7 @@ public abstract class Projectile implements Entity {
     private int damage, width, height;
     private Enemy target;
     private boolean alive;
+    private Tower targetTower;
 
 
     public Projectile(Texture texture, Enemy target, float x, float y, int width, int height, float speed, int damage){
@@ -26,10 +27,11 @@ public abstract class Projectile implements Entity {
         this.alive = true;
         this.xVelocity = 0f;
         this.yVelocity = 0f;
+        this.targetTower = null;
         calculateDirection();
     }
 
-    private void calculateDirection(){
+    public void calculateDirection(){
         float totalAllowedMovement = 1.0f;
         float xDistanceFromTarget = Math.abs(target.getX() - x -TILE_SIZE / 4 + TILE_SIZE / 2);
         float yDistanceFromTarget = Math.abs(target.getY() - y - TILE_SIZE / 4 + TILE_SIZE / 2);
@@ -45,6 +47,35 @@ public abstract class Projectile implements Entity {
             yVelocity *= -1;
         }
 
+    }
+
+    private Tower findTargetTower(){
+        for (Tower t : Player.towerList) {
+            System.out.println("t x: " +  t.getX() + "\np x: " +  (x) + "\n");
+            if(inNumRange((int)x, (int) t.getX(), 48) && inNumRange((int) y, (int) t.getY(), 48)) {
+                targetTower = t;
+                return t;
+            }
+        }
+        //System.exit(0);
+        return null;
+    }
+
+    private boolean inNumRange(int compare, int number, int numRange){
+        System.out.println("t x: " +  number + "\np x: " +  (compare) + "\n");
+        if(compare > number - numRange && compare < number + numRange)
+            return true;
+        return false;
+    }
+
+    private boolean isInRange(int range) {
+
+        if(targetTower != null) {
+            System.out.println(Math.abs(x - targetTower.getX()));
+            if (Math.abs(x - targetTower.getX()) < range && Math.abs(y - targetTower.getY()) < range)
+                return true;
+        }
+        return false;
     }
 
     public float getX() {
@@ -89,12 +120,18 @@ public abstract class Projectile implements Entity {
             x += xVelocity * speed * Delta();
             y += yVelocity * speed * Delta();
             if (CheckCollision(x, y, width, height,
-                    target.getX(), target.getY(), target.getWidth(), target.getHeight())) {
+                    target.getX(), target.getY(), target.getWidth(), target.getHeight()) && target.isAlive()) {
                 doDamage();
             }
+            findTargetTower();
+            System.out.println(targetTower);
+            if(!isInRange(targetTower.getRange() + 64))
+                alive = false;//System.out.println("WORK");
+
             draw();
         }
     }
+
 
 
     public void draw(){
@@ -109,5 +146,20 @@ public abstract class Projectile implements Entity {
         alive = status;
     }
 
+    public float getxVelocity() {
+        return xVelocity;
+    }
+
+    public void setxVelocity(float xVelocity) {
+        this.xVelocity = xVelocity;
+    }
+
+    public float getyVelocity() {
+        return yVelocity;
+    }
+
+    public void setyVelocity(float yVelocity) {
+        this.yVelocity = yVelocity;
+    }
 
 }

@@ -8,7 +8,8 @@ public enum TowerType {
 
     CannonBlue(new Texture[] {QuickLoad("cannonBaseBlue"), QuickLoad("cannonGunBlue")}, 10, 1000, 3),
     Cannon(new Texture[] {QuickLoad("cannonBase"), QuickLoad("cannonGun")}, 30, 1000, 3),
-    CannonIce(new Texture[] {QuickLoad("cannonIceBase"), QuickLoad("cannonIceGun")}, 2, 1000, 0.25f);
+    CannonIce(new Texture[] {QuickLoad("cannonIceBase"), QuickLoad("cannonIceGun")}, 30, 1000, 0.25f),
+    FireTower(new Texture[] {QuickLoad("fireTowerBase"), QuickLoad("fireTowerGun")}, 1, 200, 0.01f);
 
     Texture[] textures;
     int damage, range;
