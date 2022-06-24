@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="myLibs">
+    <output-path>$PROJECT_DIR$/out/artifacts/myLibs</output-path>
+    <root id="root">
+      <element id="library" level="project" name="lwjgl" />
+      <element id="library" level="project" name="slick-util" />
+      <element id="library" level="project" name="lwjgl_util" />
+    </root>
+  </artifact>
+</component>

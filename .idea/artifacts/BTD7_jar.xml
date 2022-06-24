@@ -2,13 +2,7 @@
   <artifact type="jar" name="BTD7:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/BTD7_jar</output-path>
     <root id="archive" name="BTD7.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/com/jason/btd7/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="BTD7" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jars/slick-util.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jars/lwjgl.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jars/lwjgl_util.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
