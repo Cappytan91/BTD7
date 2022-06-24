@@ -5,9 +5,10 @@ import com.jason.btd7.Projectile;
 import com.jason.btd7.ProjectileType;
 import org.newdawn.slick.opengl.Texture;
 
-public class ProjectileFireBall extends Projectile {
-    public ProjectileFireBall(ProjectileType type, Enemy target, float x, float y, int width, int height) {
+public class ProjectileCannonball extends Projectile {
+
+
+    public ProjectileCannonball(ProjectileType type, Enemy target, float x, float y, int width, int height) {
         super(type, target, x, y, width, height);
     }
-
 }

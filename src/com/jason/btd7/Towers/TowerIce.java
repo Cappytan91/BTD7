@@ -1,6 +1,7 @@
 package com.jason.btd7.Towers;
 
 import com.jason.btd7.Enemy;
+import com.jason.btd7.Projectiles.ProjectileCannonball;
 import com.jason.btd7.Projectiles.ProjectileIceBall;
 import com.jason.btd7.Tile;
 import com.jason.btd7.Tower;
@@ -19,8 +20,9 @@ public class TowerIce extends Tower {
     }
 
     @Override
-    public void shoot(){
-        setTimeSinceLastShot(0);
-        super.addProjectile("iceBullet");
+    public void shoot(Enemy target) {
+        super.projectiles.add(new ProjectileIceBall(super.type.projectileType, super.target, super.getX(), super.getY(), 32, 32));
     }
+
+
 }

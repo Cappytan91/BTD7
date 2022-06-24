@@ -1,7 +1,7 @@
 package com.jason.btd7;
 
 
-import com.jason.btd7.Projectiles.ProjectileBullet;
+
 import com.jason.btd7.Projectiles.ProjectileFireBall;
 import com.jason.btd7.Projectiles.ProjectileIceBall;
 import org.newdawn.slick.opengl.Texture;
@@ -17,13 +17,15 @@ public abstract class Tower implements Entity{
 
     private float x, y, timeSinceLastShot, firingSpeed, angle;
     private int width, height, damage, range;
-    private Enemy target;
+    public Enemy target;
     private Texture[] textures;
     private CopyOnWriteArrayList<Enemy> enemies;
     private boolean targeted;
-    private ArrayList<Projectile> projectiles;
+    public ArrayList<Projectile> projectiles;
+    public TowerType type;
 
     public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies){
+        this.type = type;
         this.textures = type.textures;
         this.damage = type.damage;
         this.range = type.range;
@@ -74,20 +76,7 @@ public abstract class Tower implements Entity{
         return (float) Math.toDegrees(angleTemp);
     }
 
-    public void shoot(){
-        timeSinceLastShot = 0;
-        addProjectile("bullet");
-    }
-
-    public void addProjectile(String projectileName){
-        if(projectileName.equals("iceBullet"))
-            projectiles.add(new ProjectileIceBall(QuickLoad(projectileName), target, x + TILE_SIZE / 2 - TILE_SIZE / 4, y + TILE_SIZE / 2 - TILE_SIZE / 4, 32, 32, 1000, damage));
-        else if(projectileName.equals("fireBall"))
-            projectiles.add(new ProjectileFireBall(QuickLoad(projectileName), target, x + TILE_SIZE / 2 - TILE_SIZE / 4, y + TILE_SIZE / 2 - TILE_SIZE / 4, 32, 32, 1000, damage));
-        else
-            projectiles.add(new ProjectileBullet(QuickLoad(projectileName), target, x + TILE_SIZE / 2 - TILE_SIZE / 4, y + TILE_SIZE / 2 - TILE_SIZE / 4, 32, 32, 1000, damage));
-    }
-
+    public abstract void shoot(Enemy target);
 
 
     public void updateEnemyList(CopyOnWriteArrayList<Enemy> newList){
@@ -100,7 +89,8 @@ public abstract class Tower implements Entity{
         }else {
             angle = calculateAngle();
             if (timeSinceLastShot > firingSpeed) {
-                shoot();
+                shoot(target);
+                timeSinceLastShot = 0;
             }
         }
         if(target == null || target.isAlive() == false)
