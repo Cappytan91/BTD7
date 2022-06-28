@@ -2,7 +2,6 @@ package com.jason.btd7.UI;
 
 
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.opengl.Texture;
 
 import java.util.ArrayList;
 

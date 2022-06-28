@@ -17,7 +17,8 @@ public class Player {
     private TileType[] types;
     private WaveManager waveManager;
     private ArrayList<Tower> towerList;
-    private boolean leftMouseButtonDown, rightMouseButtonDown;
+    private boolean leftMouseButtonDown, rightMouseButtonDown, holdingTower;
+    private Tower tempTower;
     public static int Cash, Lives;
 
 
@@ -31,6 +32,8 @@ public class Player {
         this.towerList = new ArrayList<Tower>();
         this.leftMouseButtonDown = false;
         this.rightMouseButtonDown = false;
+        this.holdingTower = false;
+        this.tempTower = null;
         Cash = 0;
         Lives = 0;
     }
@@ -56,6 +59,13 @@ public class Player {
     }
 
     public void update(){
+        // Update holdingTower
+        if(holdingTower){
+            tempTower.setX(getMouseTile().getX());
+            tempTower.setY(getMouseTile().getY());
+            tempTower.draw();
+        }
+
         // Update all towers in game
         for(Tower t : towerList){
             t.update();
@@ -64,15 +74,10 @@ public class Player {
         }
 
         // Handle mouse input
-        if(Mouse.isButtonDown(0) && !leftMouseButtonDown){
+        if(!Mouse.isButtonDown(0) && !leftMouseButtonDown){
+            placeTower();
+        }
 
-            if(modifyCash(-20))
-                towerList.add(new TowerCannonBlue(TowerType.CannonBlue, grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE), waveManager.getCurrentWave().getEnemyList()));
-        }
-        if(Mouse.isButtonDown(1) && !rightMouseButtonDown){
-            if(modifyCash(-55))
-                towerList.add(new TowerIce(TowerType.CannonIce, grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE), waveManager.getCurrentWave().getEnemyList()));
-        }
 
         leftMouseButtonDown = Mouse.isButtonDown(0);
         rightMouseButtonDown = Mouse.isButtonDown(1);
@@ -88,6 +93,24 @@ public class Player {
 
         }
 
+    }
+
+    private void placeTower(){
+        if(holdingTower)
+            if(modifyCash(-20))
+                towerList.add(new TowerIce(TowerType.CannonIce, getMouseTile(), waveManager.getCurrentWave().getEnemyList()));
+        holdingTower = false;
+        tempTower = null;
+
+    }
+
+    public void pickTower(Tower t){
+        tempTower = t;
+        holdingTower = true;
+    }
+
+    private Tile getMouseTile(){
+        return grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE);
     }
 
 
