@@ -2,21 +2,19 @@ package com.jason.btd7;
 
 
 
-import com.jason.btd7.Projectiles.ProjectileFireBall;
-import com.jason.btd7.Projectiles.ProjectileIceBall;
 import org.newdawn.slick.opengl.Texture;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.jason.btd7.helpers.Artist.*;
-import static com.jason.btd7.helpers.Artist.TILE_SIZE;
+
 import static com.jason.btd7.helpers.Clock.Delta;
 
 public abstract class Tower implements Entity{
 
     private float x, y, timeSinceLastShot, firingSpeed, angle;
-    private int width, height, damage, range;
+    private int width, height, range;
     public Enemy target;
     private Texture[] textures;
     private CopyOnWriteArrayList<Enemy> enemies;
@@ -27,7 +25,6 @@ public abstract class Tower implements Entity{
     public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies){
         this.type = type;
         this.textures = type.textures;
-        this.damage = type.damage;
         this.range = type.range;
         this.x = startTile.getX();
         this.y = startTile.getY();
@@ -44,13 +41,16 @@ public abstract class Tower implements Entity{
     private Enemy acquireTarget(){
         Enemy closest = null;
 
+        // Arbitrary distance (larger than map) to help sort enemy distances
         float closestDistance = 10000;
+        // Go through each enemy and return the nearest one
         for(Enemy e: enemies){
             if(isInRange(e) && findDistance(e) < closestDistance && e.isAlive()){
                 closestDistance = findDistance(e);
                 closest = e;
             }
         }
+        // If an enemy exists and is returned, targeted == true
         if(closest != null)
             targeted = true;
         return closest;
@@ -76,6 +76,7 @@ public abstract class Tower implements Entity{
         return (float) Math.toDegrees(angleTemp);
     }
 
+    // Abstract meathod for "shoot", must @Override in subclasses
     public abstract void shoot(Enemy target);
 
 
@@ -160,7 +161,4 @@ public abstract class Tower implements Entity{
         this.projectiles = projectiles;
     }
 
-    public int getDamage() {
-        return damage;
-    }
 }

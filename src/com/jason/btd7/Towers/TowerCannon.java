@@ -14,9 +14,8 @@ import static com.jason.btd7.helpers.Clock.*;
 
 public class TowerCannon {
     private float x, y, timeSinceLastShot, firingSpeed, angle;
-    private int width, height, damage, range;
+    private int width, height, range;
     private Texture baseTexture, cannonTexture;
-    private Tile startTile;
     private ArrayList<Projectile> projectiles;
     private CopyOnWriteArrayList<Enemy> enemies;
     private Enemy target;
@@ -25,12 +24,10 @@ public class TowerCannon {
     public TowerCannon(Texture baseTexture, Tile startTile, int damage, int range, CopyOnWriteArrayList<Enemy> enemies){
         this.baseTexture = baseTexture;
         this.cannonTexture = QuickLoad("cannonGunBlue");
-        this.startTile = startTile;
         this.x = startTile.getX();
         this.y = startTile.getY();
         this.width = (int) startTile.getWidth();
         this.height = (int) startTile.getHeight();
-        this.damage = damage;
         this.range = range;
         this.firingSpeed = 3;
         this.timeSinceLastShot = 0;

@@ -70,6 +70,7 @@ public class Editor {
 
     }
 
+    // Allows Editor to change which TileType is selected
     private void moveIndex(){
         index++;
         if(index > types.length - 1){

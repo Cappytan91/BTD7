@@ -38,6 +38,7 @@ public abstract class Projectile implements Entity {
         xVelocity = xPercentOfMovement;
         yVelocity = totalAllowedMovement - xPercentOfMovement;
 
+        // Set direction based on position of target relative to tower
         if(target.getX() < x){
             xVelocity *= -1;
         }
@@ -79,6 +80,7 @@ public abstract class Projectile implements Entity {
         this.height =  height;
     }
 
+    // Deal damage to Enemy
     public void doDamage(){
         target.damage(damage);
         alive = false;
