@@ -31,7 +31,7 @@ public class Game {
         towerPickerUI = new UI();
         //towerPickerUI.addButton("CannonIce", "cannonIceGun", 0, 0);
         //towerPickerUI.addButton("CannonBlue", "cannonGunBlue", 64, 0);
-        towerPickerUI.createMenu("TowerPicker", 1312, 0, 2, 0);
+        towerPickerUI.createMenu("TowerPicker", 1280, 0, 192, 960, 2, 0);
         towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonIce", QuickLoad("cannonIceGun"), 0, 0));
         towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonBlue", QuickLoad("cannonGunBlue"), 0, 0));
         towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonBlue", QuickLoad("cannonGunBlue"), 0, 0));

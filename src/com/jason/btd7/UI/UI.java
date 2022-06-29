@@ -38,8 +38,8 @@ public class UI {
         return null;
     }
 
-    public void createMenu(String name, int x, int y, int optionsWidth, int optionsHeight){
-        menuList.add(new Menu(name, x, y, optionsWidth, optionsHeight));
+    public void createMenu(String name, int x, int y, int width, int height, int optionsWidth, int optionsHeight){
+        menuList.add(new Menu(name, x, y, width, height, optionsWidth, optionsHeight));
     }
 
     public Menu getMenu(String name){
@@ -61,14 +61,17 @@ public class UI {
 
         String name;
         private ArrayList<Button> menuButtons;
-        private int x, y, buttonAmount, optionsWidth, optionsHeight;
+        private int x, y, width, height,  buttonAmount, optionsWidth, optionsHeight, padding;
 
-        public Menu(String name, int x, int y, int optionsWidth, int optionsHeight){
+        public Menu(String name, int x, int y, int width, int height, int optionsWidth, int optionsHeight){
             this.name = name;
             this.x = x;
             this.y = y;
+            this.width = width;
+            this.height = height;
             this.optionsWidth = optionsWidth;
             this.optionsHeight = optionsHeight;
+            this.padding = (width - (optionsWidth * TILE_SIZE))/ (optionsWidth + 1);
             this.buttonAmount = 0;
             this.menuButtons = new ArrayList<Button>();
         }
@@ -76,7 +79,7 @@ public class UI {
         public void addButton(Button b){
             if(optionsWidth != 0)
                 b.setY(y + (buttonAmount / optionsWidth) * TILE_SIZE);
-            b.setX(x + (buttonAmount % optionsWidth) * TILE_SIZE);
+            b.setX(x + (buttonAmount % 2) * (padding + TILE_SIZE) + padding);
             buttonAmount++;
             menuButtons.add(b);
         }
