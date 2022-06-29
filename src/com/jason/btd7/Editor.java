@@ -1,5 +1,8 @@
 package com.jason.btd7;
 
+import com.jason.btd7.Towers.TowerCannonBlue;
+import com.jason.btd7.Towers.TowerCannonIce;
+import com.jason.btd7.UI.UI;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -13,6 +16,8 @@ public class Editor {
     private TileGrid grid;
     private int index;
     private TileType[] types;
+    private UI editorUI;
+    private UI.Menu tilePickerMenu;
 
     public Editor(){
         this.grid = loadMap("mapTest");
@@ -22,15 +27,38 @@ public class Editor {
         this.types[0] = TileType.Grass;
         this.types[1] = TileType.Dirt;
         this.types[2] = TileType.Water;
+
+        setupUI();
+    }
+
+    private void setupUI(){
+        editorUI = new UI();
+        editorUI.createMenu("TilePicker", 1280, 0, 192, 960, 2, 0);
+        tilePickerMenu = editorUI.getMenu("TilePicker");
+        tilePickerMenu.quickAdd("Grass", "grass");
+        tilePickerMenu.quickAdd("Dirt", "dirt");
+        tilePickerMenu.quickAdd("Water", "water");
     }
 
     public void update(){
-        grid.draw();
+        draw();
         viewTile();
 
         // Handle mouse input
-        if(Mouse.isButtonDown(0)){
-            setTile();
+        if(Mouse.next()) {
+            boolean mouseClicked = Mouse.isButtonDown(0);
+
+            if (mouseClicked) {
+                if (tilePickerMenu.isButtonClicked("Grass")) {
+                    index = 0;
+                } else if(tilePickerMenu.isButtonClicked("Dirt")) {
+                    index = 1;
+                } else if(tilePickerMenu.isButtonClicked("Water")){
+                    index = 2;
+                } else
+                    setTile();
+
+            }
         }
 
         // Handle keyboard input
@@ -42,6 +70,11 @@ public class Editor {
                 saveMap("mapTest", grid);
             }
         }
+    }
+
+    private void draw(){
+        grid.draw();
+        editorUI.draw();
     }
 
 

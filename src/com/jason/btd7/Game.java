@@ -13,8 +13,9 @@ public class Game {
     private TileGrid grid;
     private Player player;
     private WaveManager waveManager;
-    private UI towerPickerUI;
+    private UI gameUI;
     private boolean leftMouseButtonDown;
+    private UI.Menu towerPickerMenu;
 
     public Game(int[][] map){
 
@@ -28,26 +29,25 @@ public class Game {
     }
 
     private void setupUI(){
-        towerPickerUI = new UI();
+        gameUI = new UI();
         //towerPickerUI.addButton("CannonIce", "cannonIceGun", 0, 0);
         //towerPickerUI.addButton("CannonBlue", "cannonGunBlue", 64, 0);
-        towerPickerUI.createMenu("TowerPicker", 1280, 0, 192, 960, 2, 0);
-        towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonIce", QuickLoad("cannonIceGun"), 0, 0));
-        towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonBlue", QuickLoad("cannonGunBlue"), 0, 0));
-        towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonBlue", QuickLoad("cannonGunBlue"), 0, 0));
-        towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonIce", QuickLoad("cannonIceGun"), 0, 0));
+        gameUI.createMenu("TowerPicker", 1280, 0, 192, 960, 2, 0);
+        towerPickerMenu = gameUI.getMenu("TowerPicker");
+        towerPickerMenu.quickAdd("CannonIce", "cannonIceGun");
+        towerPickerMenu.quickAdd("CannonBlue", "cannonGunBlue");
     }
 
     private void updateUI(){
-        towerPickerUI.draw();
+        gameUI.draw();
 
         if(Mouse.next()) {
             boolean mouseClicked = Mouse.isButtonDown(0);
 
             if (mouseClicked && !leftMouseButtonDown) {
-                if (towerPickerUI.getMenu("TowerPicker").isButtonClicked("CannonIce"))
+                if (towerPickerMenu.isButtonClicked("CannonIce"))
                     player.pickTower(new TowerCannonIce(TowerType.CannonIce, grid.getTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
-                if (towerPickerUI.getMenu("TowerPicker").isButtonClicked("CannonBlue"))
+                if (towerPickerMenu.isButtonClicked("CannonBlue"))
                     player.pickTower(new TowerCannonBlue(TowerType.CannonBlue, grid.getTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
             }
         }
@@ -58,7 +58,6 @@ public class Game {
         grid.draw();
         waveManager.update();
         player.update();
-        towerPickerUI.draw();
         DrawQuadTex(QuickLoad("menu_BG"), 1280, 0, 192, 960);
         updateUI();
 
