@@ -1,6 +1,5 @@
 package com.jason.btd7;
 
-import com.jason.btd7.Towers.TowerCannonIce;
 import com.jason.btd7.helpers.Clock;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -42,6 +41,7 @@ public class Player {
         Lives = 10;
     }
 
+    // Check if player can afford tower, if so: charge player tower cost
     public static boolean modifyCash(int amount){
         if(Cash + amount >= 0){
             Cash += amount;
@@ -94,11 +94,14 @@ public class Player {
     }
 
     private void placeTower(){
+        Tile currentTile = getMouseTile();
         if(holdingTower)
-            if(modifyCash(-tempTower.getCost()))
+            if(!currentTile.isOccupied() && modifyCash(-tempTower.getCost())) {
+                currentTile.setOccupied(true);
                 towerList.add(tempTower);
-        holdingTower = false;
-        tempTower = null;
+                holdingTower = false;
+                tempTower = null;
+            }
 
     }
 

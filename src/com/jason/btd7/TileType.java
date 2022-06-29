@@ -3,7 +3,7 @@ package com.jason.btd7;
 public enum TileType {
 
     Grass("grass", true),
-    Dirt("dirt", true),
+    Dirt("dirt", false),
     Water("water", false),
     NULL("water", false),
 
