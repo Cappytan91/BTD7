@@ -1,9 +1,7 @@
 package com.jason.btd7;
 
-import com.jason.btd7.Towers.TowerCannonBlue;
-import com.jason.btd7.Towers.TowerIce;
+import com.jason.btd7.Towers.TowerCannonIce;
 import com.jason.btd7.helpers.Clock;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -98,7 +96,7 @@ public class Player {
     private void placeTower(){
         if(holdingTower)
             if(modifyCash(-20))
-                towerList.add(new TowerIce(TowerType.CannonIce, getMouseTile(), waveManager.getCurrentWave().getEnemyList()));
+                towerList.add(tempTower);
         holdingTower = false;
         tempTower = null;
 

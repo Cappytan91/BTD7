@@ -76,7 +76,7 @@ public abstract class Tower implements Entity{
         return (float) Math.toDegrees(angleTemp);
     }
 
-    // Abstract meathod for "shoot", must @Override in subclasses
+    // Abstract method for "shoot", must @Override in subclasses
     public abstract void shoot(Enemy target);
 
 
