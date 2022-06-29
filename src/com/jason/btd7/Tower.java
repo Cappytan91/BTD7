@@ -14,7 +14,7 @@ import static com.jason.btd7.helpers.Clock.Delta;
 public abstract class Tower implements Entity{
 
     private float x, y, timeSinceLastShot, firingSpeed, angle;
-    private int width, height, range;
+    private int width, height, range, cost;
     public Enemy target;
     private Texture[] textures;
     private CopyOnWriteArrayList<Enemy> enemies;
@@ -26,6 +26,7 @@ public abstract class Tower implements Entity{
         this.type = type;
         this.textures = type.textures;
         this.range = type.range;
+        this.cost = type.cost;
         this.x = startTile.getX();
         this.y = startTile.getY();
         this.width = startTile.getWidth();
@@ -159,6 +160,10 @@ public abstract class Tower implements Entity{
 
     public void setProjectiles(ArrayList<Projectile> projectiles) {
         this.projectiles = projectiles;
+    }
+
+    public int getCost(){
+        return cost;
     }
 
 }

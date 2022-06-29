@@ -95,7 +95,7 @@ public class Player {
 
     private void placeTower(){
         if(holdingTower)
-            if(modifyCash(-20))
+            if(modifyCash(-tempTower.getCost()))
                 towerList.add(tempTower);
         holdingTower = false;
         tempTower = null;
