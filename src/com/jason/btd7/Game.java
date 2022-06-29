@@ -17,10 +17,10 @@ public class Game {
     private boolean leftMouseButtonDown;
     private UI.Menu towerPickerMenu;
 
-    public Game(int[][] map){
+    public Game(TileGrid grid){
 
-        grid = new TileGrid(map);
-        waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.getTile(10, 6), grid, TILE_SIZE, TILE_SIZE, 60, 25), 2, 2);
+        this.grid = grid;
+        waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.getTile(2, 14), grid, TILE_SIZE, TILE_SIZE, 60, 25), 2, 2);
         player = new Player(grid, waveManager);
         player.setup();
         this.leftMouseButtonDown = false;
@@ -32,7 +32,7 @@ public class Game {
         gameUI = new UI();
         //towerPickerUI.addButton("CannonIce", "cannonIceGun", 0, 0);
         //towerPickerUI.addButton("CannonBlue", "cannonGunBlue", 64, 0);
-        gameUI.createMenu("TowerPicker", 1280, 0, 192, 960, 2, 0);
+        gameUI.createMenu("TowerPicker", 1280, 100, 192, 960, 2, 0);
         towerPickerMenu = gameUI.getMenu("TowerPicker");
         towerPickerMenu.quickAdd("CannonIce", "cannonIceGun");
         towerPickerMenu.quickAdd("CannonBlue", "cannonGunBlue");
@@ -58,7 +58,7 @@ public class Game {
         grid.draw();
         waveManager.update();
         player.update();
-        DrawQuadTex(QuickLoad("menu_BG"), 1280, 0, 192, 960);
+        DrawQuadTex(QuickLoad("menu_BG2"), 1280, 0, 192, 960);
         updateUI();
 
     }

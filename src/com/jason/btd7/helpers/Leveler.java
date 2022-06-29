@@ -8,7 +8,7 @@ import java.io.*;
 
 public class Leveler {
 
-    public static void saveMap(String mapName, TileGrid grid){
+    public static void SaveMap(String mapName, TileGrid grid){
         String mapData = "";
         for(int i = 0; i < grid.getTilesWide(); i++){
             for(int j = 0; j < grid.getTilesHigh(); j ++){
@@ -27,7 +27,7 @@ public class Leveler {
 
     }
 
-    public static TileGrid loadMap(String mapName){
+    public static TileGrid LoadMap(String mapName){
         TileGrid grid = new TileGrid();
 
         try {

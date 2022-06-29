@@ -6,8 +6,8 @@ import com.jason.btd7.UI.UI;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import static com.jason.btd7.helpers.Artist.HEIGHT;
-import static com.jason.btd7.helpers.Artist.TILE_SIZE;
+import static com.jason.btd7.helpers.Artist.*;
+import static com.jason.btd7.helpers.Artist.QuickLoad;
 import static com.jason.btd7.helpers.Leveler.*;
 
 
@@ -20,7 +20,7 @@ public class Editor {
     private UI.Menu tilePickerMenu;
 
     public Editor(){
-        this.grid = loadMap("mapTest");
+        this.grid = LoadMap("mapTest");
         this.index = 0;
 
         this.types = new TileType[3];
@@ -33,7 +33,7 @@ public class Editor {
 
     private void setupUI(){
         editorUI = new UI();
-        editorUI.createMenu("TilePicker", 1280, 0, 192, 960, 2, 0);
+        editorUI.createMenu("TilePicker", 1280, 100, 192, 960, 2, 0);
         tilePickerMenu = editorUI.getMenu("TilePicker");
         tilePickerMenu.quickAdd("Grass", "grass");
         tilePickerMenu.quickAdd("Dirt", "dirt");
@@ -42,7 +42,7 @@ public class Editor {
 
     public void update(){
         draw();
-        viewTile();
+
 
         // Handle mouse input
         if(Mouse.next()) {
@@ -67,19 +67,22 @@ public class Editor {
                 moveIndex();
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_S && Keyboard.getEventKeyState()){
-                saveMap("mapTest", grid);
+                SaveMap("mapTest", grid);
             }
         }
     }
 
     private void draw(){
         grid.draw();
+        viewTile();
+        DrawQuadTex(QuickLoad("menu_BG"), 1280, 0, 192, 960);
         editorUI.draw();
     }
 
 
     private void setTile(){
-        grid.setTile((int) Math.floor(Mouse.getX() / TILE_SIZE),
+        if( !((int) Math.floor(Mouse.getX() / TILE_SIZE) >= 20))
+            grid.setTile((int) Math.floor(Mouse.getX() / TILE_SIZE),
                 (int) Math.floor((HEIGHT - Mouse.getY() - 1) / TILE_SIZE), types[index] );
     }
 
