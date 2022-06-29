@@ -6,8 +6,7 @@ import com.jason.btd7.UI.Button;
 import com.jason.btd7.UI.UI;
 import org.lwjgl.input.Mouse;
 
-import static com.jason.btd7.helpers.Artist.QuickLoad;
-import static com.jason.btd7.helpers.Artist.TILE_SIZE;
+import static com.jason.btd7.helpers.Artist.*;
 
 public class Game {
 
@@ -32,9 +31,11 @@ public class Game {
         towerPickerUI = new UI();
         //towerPickerUI.addButton("CannonIce", "cannonIceGun", 0, 0);
         //towerPickerUI.addButton("CannonBlue", "cannonGunBlue", 64, 0);
-        towerPickerUI.createMenu("TowerPicker", 0, 0);
+        towerPickerUI.createMenu("TowerPicker", 1312, 0, 2, 0);
         towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonIce", QuickLoad("cannonIceGun"), 0, 0));
         towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonBlue", QuickLoad("cannonGunBlue"), 0, 0));
+        towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonBlue", QuickLoad("cannonGunBlue"), 0, 0));
+        towerPickerUI.getMenu("TowerPicker").addButton(new Button("CannonIce", QuickLoad("cannonIceGun"), 0, 0));
     }
 
     private void updateUI(){
@@ -54,13 +55,12 @@ public class Game {
     }
 
     public void update(){
-
         grid.draw();
         waveManager.update();
         player.update();
         towerPickerUI.draw();
+        DrawQuadTex(QuickLoad("menu_BG"), 1280, 0, 192, 960);
         updateUI();
-
 
     }
 
