@@ -5,6 +5,7 @@ import com.jason.btd7.Towers.TowerCannonIce;
 import com.jason.btd7.UI.UI;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.opengl.Texture;
 
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Artist.QuickLoad;
@@ -18,6 +19,7 @@ public class Editor {
     private TileType[] types;
     private UI editorUI;
     private UI.Menu tilePickerMenu;
+    private Texture menuBackground;
 
     public Editor(){
         this.grid = LoadMap("mapTest");
@@ -27,6 +29,7 @@ public class Editor {
         this.types[0] = TileType.Grass;
         this.types[1] = TileType.Dirt;
         this.types[2] = TileType.Water;
+        this.menuBackground = QuickLoad("menu_BG");
 
         setupUI();
     }
@@ -75,7 +78,7 @@ public class Editor {
     private void draw(){
         grid.draw();
         viewTile();
-        DrawQuadTex(QuickLoad("menu_BG"), 1280, 0, 192, 960);
+        DrawQuadTex(menuBackground, 1280, 0, 192, 960);
         editorUI.draw();
     }
 

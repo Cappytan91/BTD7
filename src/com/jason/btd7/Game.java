@@ -5,6 +5,7 @@ import com.jason.btd7.Towers.TowerCannonIce;
 import com.jason.btd7.UI.Button;
 import com.jason.btd7.UI.UI;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.opengl.Texture;
 
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.StateManager.framesInLastSecond;
@@ -17,6 +18,7 @@ public class Game {
     private UI gameUI;
     private boolean leftMouseButtonDown;
     private UI.Menu towerPickerMenu;
+    private Texture menuBackground;
 
     public Game(TileGrid grid){
 
@@ -25,6 +27,7 @@ public class Game {
         player = new Player(grid, waveManager);
         player.setup();
         this.leftMouseButtonDown = false;
+        this.menuBackground = QuickLoad("menu_BG2");
         setupUI();
 
     }
@@ -44,6 +47,7 @@ public class Game {
         gameUI.drawString(1310, 400, "Lives: " + Player.Lives);
         gameUI.drawString(1340, 500, "Cash: " + Player.Cash);
         gameUI.drawString(1200, 10, framesInLastSecond + " fps");
+        gameUI.drawString(1340, 600,  "Wave: " + waveManager.getWaveNumber());
 
         if(Mouse.next()) {
             boolean mouseClicked = Mouse.isButtonDown(0);
@@ -62,7 +66,7 @@ public class Game {
         grid.draw();
         waveManager.update();
         player.update();
-        DrawQuadTex(QuickLoad("menu_BG2"), 1280, 0, 192, 960);
+        DrawQuadTex(menuBackground, 1280, 0, 192, 960);
         updateUI();
 
     }
