@@ -16,8 +16,8 @@ public abstract class Projectile implements Entity {
 
     public Projectile(ProjectileType type, Enemy target, float x, float y, int width, int height){
         this.texture = type.texture;
-        this.x = x;
-        this.y = y;
+        this.x = x + TILE_SIZE / 4;
+        this.y = y + TILE_SIZE / 4;
         this.width = width;
         this.height = height;
         this.speed = type.speed;

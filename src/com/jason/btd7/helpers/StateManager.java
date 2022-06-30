@@ -58,7 +58,6 @@ public class StateManager {
         }
 
         framesInCurrentSecond++;
-        System.out.println(framesInLastSecond + " fps");
 
     }
 

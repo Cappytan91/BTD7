@@ -7,6 +7,7 @@ import com.jason.btd7.UI.UI;
 import org.lwjgl.input.Mouse;
 
 import static com.jason.btd7.helpers.Artist.*;
+import static com.jason.btd7.helpers.StateManager.framesInLastSecond;
 
 public class Game {
 
@@ -42,6 +43,7 @@ public class Game {
         gameUI.draw();
         gameUI.drawString(1310, 400, "Lives: " + Player.Lives);
         gameUI.drawString(1340, 500, "Cash: " + Player.Cash);
+        gameUI.drawString(1200, 10, framesInLastSecond + " fps");
 
         if(Mouse.next()) {
             boolean mouseClicked = Mouse.isButtonDown(0);
