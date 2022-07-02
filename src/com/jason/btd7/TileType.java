@@ -7,8 +7,8 @@ public enum TileType {
     Water("water", false),
     NULL("water", false),
 
-    // editor blocks
 
+    // editor blocks
     GrassE("grassE", false),
     DirtE("dirtE", false),
     WaterE("waterE", false);

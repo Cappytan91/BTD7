@@ -99,7 +99,7 @@ public class Enemy implements Entity{
         while (cont){
             int[] currentD = findNextD(checkpoints.get(counter).getTile());
             // check if next direction / checkpoint exists, end after 20 checkpoints
-            if(currentD[0] == 2 || counter == 20){
+            if(currentD[0] == 2 || counter == 20){ // For some reason the map makes it turn around at the end, temp solution: set counter to amount of check points
                 cont = false;
             }else{
                 checkpoints.add(findNextC(checkpoints.get(counter).getTile(), directions = findNextD(checkpoints.get(counter).getTile())));
@@ -153,13 +153,12 @@ public class Enemy implements Entity{
         }else if (s.getType() == d.getType() && directions[1] != -1){
             dir[0] = 0;
             dir[1] = 1;
-        }else if (s.getType() == l.getType() && directions[1] != 1){
+        }else if (s.getType() == l.getType() && directions[0] != 1){
             dir[0] = -1;
             dir[1] = 0;
         }else{
             dir[0] = 2;
             dir[1] = 2;
-            System.out.println("NO DIRECTION FOUND!!");
 
         }
 
