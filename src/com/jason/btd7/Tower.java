@@ -100,17 +100,19 @@ public abstract class Tower implements Entity{
 
         timeSinceLastShot += Delta();
 
-        for(Projectile p: projectiles){
-            p.update();
-        }
+
 
         draw();
     }
 
     public void draw() {
         DrawQuadTex(textures[0], x, y, width, height);
+        // This makes the bullet under the shooting part & not the base
+        for (Projectile p : projectiles) {
+            p.update();
+        }
         if(textures.length > 1)
-            for(int i = 1; i < textures.length; i++)
+            for (int i = 1; i < textures.length; i++)
                 DrawQuadTexRot(textures[i], x, y, width, height, angle);
     }
 
