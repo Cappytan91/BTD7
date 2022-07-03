@@ -21,6 +21,7 @@ public abstract class Tower implements Entity{
     private boolean targeted;
     public ArrayList<Projectile> projectiles;
     public TowerType type;
+    public int turn;
 
     public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies){
         this.type = type;
@@ -37,6 +38,7 @@ public abstract class Tower implements Entity{
         this.projectiles = new ArrayList<Projectile>();
         this.firingSpeed = type.firingSpeed;
         this.angle = 0f;
+        this.turn = 0;
     }
 
     private Enemy acquireTarget(){
@@ -89,7 +91,7 @@ public abstract class Tower implements Entity{
         if(!targeted){
             target = acquireTarget();
         }else {
-            angle = calculateAngle();
+            angle = calculateAngle() - turn;
             if (timeSinceLastShot > firingSpeed) {
                 shoot(target);
                 timeSinceLastShot = 0;

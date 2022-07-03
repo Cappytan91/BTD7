@@ -1,5 +1,6 @@
 package com.jason.btd7;
 
+import com.jason.btd7.Towers.GruTank;
 import com.jason.btd7.Towers.TowerCannonBlue;
 import com.jason.btd7.Towers.TowerCannonIce;
 import com.jason.btd7.UI.Button;
@@ -40,6 +41,8 @@ public class Game {
         towerPickerMenu = gameUI.getMenu("TowerPicker");
         towerPickerMenu.quickAdd("CannonIce", "cannonIceGun");
         towerPickerMenu.quickAdd("CannonBlue", "cannonGunBlue");
+        towerPickerMenu.quickAdd("GruTank", "gruHead");
+
     }
 
     private void updateUI(){
@@ -57,6 +60,8 @@ public class Game {
                     player.pickTower(new TowerCannonIce(TowerType.CannonIce, grid.getTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
                 if (towerPickerMenu.isButtonClicked("CannonBlue"))
                     player.pickTower(new TowerCannonBlue(TowerType.CannonBlue, grid.getTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
+                if (towerPickerMenu.isButtonClicked("GruTank"))
+                    player.pickTower(new GruTank(TowerType.GruTank, grid.getTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
             }
         }
         leftMouseButtonDown = Mouse.isButtonDown(0);
