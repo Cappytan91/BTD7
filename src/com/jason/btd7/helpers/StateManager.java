@@ -23,7 +23,7 @@ public class StateManager {
     public static Game game;
     public static Editor editor;
 
-    static TileGrid map = LoadMap("mapTest");
+    static TileGrid map = LoadMap("JacobsMap");
 
     public static void update(){
 

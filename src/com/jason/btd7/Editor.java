@@ -70,7 +70,7 @@ public class Editor {
                 moveIndex();
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_S && Keyboard.getEventKeyState()){
-                SaveMap("mapTest", grid);
+                SaveMap("JacobsMap", grid);
             }
         }
     }
