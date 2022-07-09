@@ -19,6 +19,7 @@ public class Enemy implements Entity{
 
     private ArrayList<Checkpoint> checkpoints;
     private int[] directions;
+    public float originalSpeed;
 
     public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health){
         this.texture = texture;
@@ -32,6 +33,7 @@ public class Enemy implements Entity{
         this.width = width;
         this.height = height;
         this.speed = speed;
+        this.originalSpeed = speed;
         this.health = health;
         this.startHealth = health;
         this.first = true;

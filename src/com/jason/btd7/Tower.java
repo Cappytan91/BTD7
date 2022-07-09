@@ -59,9 +59,9 @@ public abstract class Tower implements Entity{
         return closest;
     }
 
-    private boolean isInRange(Enemy e ){
-        float xDistance = Math.abs(e.getX() - x);
-        float yDistance = Math.abs(e.getY() - y);
+    protected boolean isInRange(Enemy e){
+        float xDistance = Math.abs(e.getX() + 32 - (x + 32));
+        float yDistance = Math.abs(e.getY() + 32 - (y + 32));
 
         if(xDistance < range && yDistance < range)
             return true;
@@ -170,4 +170,7 @@ public abstract class Tower implements Entity{
         return cost;
     }
 
+    public CopyOnWriteArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
 }

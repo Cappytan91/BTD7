@@ -8,7 +8,7 @@ public enum TowerType {
 
     CannonBlue(new Texture[] {QuickLoad("cannonBaseBlue"), QuickLoad("cannonGunBlue")}, ProjectileType.CannonBall,10, 1000, 3f, 15),
     Cannon(new Texture[] {QuickLoad("cannonBase"), QuickLoad("cannonGun")}, ProjectileType.CannonBall, 30, 1000, 3, 0),
-    CannonIce(new Texture[] {QuickLoad("cannonIceBase"), QuickLoad("cannonIceGun")}, ProjectileType.IceBall,2, 1000, 0.25f, 20),
+    CannonIce(new Texture[] {QuickLoad("cannonIceBase"), QuickLoad("cannonIceGun")}, ProjectileType.IceBall,2, 128, 1f, 20),
     GruTank(new Texture[] {QuickLoad("gruBody"), QuickLoad("gruHead")}, ProjectileType.CannonBall,2, 1000, 0.5f, 20);
 
     Texture[] textures;
