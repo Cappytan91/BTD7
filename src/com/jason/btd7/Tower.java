@@ -74,6 +74,7 @@ public abstract class Tower implements Entity{
 
             Enemy first = null;
 
+            // Get First Enemy in the list and break (enemies automatically removed from list so enemy 0 always exists)
             for (Enemy e : enemies) {
                 if(isInRange(e)) {
                     first = e;
@@ -89,6 +90,7 @@ public abstract class Tower implements Entity{
 
             Enemy last = null;
 
+            // Same as First, but keeps going to find the last enemy in range
             for (Enemy e : enemies) {
                 if(isInRange(e)) {
                     last = e;
@@ -104,6 +106,7 @@ public abstract class Tower implements Entity{
             Enemy strongest = null;
             float largestHP = 0;
 
+            // If enemy HP is larger than current largestHP, make largest, run until all enemies in range are checked
             for (Enemy e : enemies) {
                 if(isInRange(e) && e.getHealth() > largestHP && e.isAlive()) {
                     largestHP = e.getHealth();
