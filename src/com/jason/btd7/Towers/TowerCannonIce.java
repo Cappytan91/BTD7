@@ -13,19 +13,20 @@ import static com.jason.btd7.helpers.Clock.Delta;
 public class TowerCannonIce extends Tower {
 
     private float freezeTime, time;
+    private CopyOnWriteArrayList<Enemy> enemiesInRange;
 
     public TowerCannonIce(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies) {
         super(type, startTile, enemies);
-
-        this.freezeTime = 0.5f;
+        this.enemiesInRange = new CopyOnWriteArrayList<Enemy>();
+        this.freezeTime = 0.7f;
         this.time = 0;
     }
 
     @Override
     public void shoot(Enemy target) {
-        for (Enemy e : getEnemies()) {
+        for (Enemy e : enemiesInRange) {
             if(super.isInRange(e))
-                e.setSpeed(15);
+                e.setSpeed(4);
         }
     }
 
@@ -33,13 +34,14 @@ public class TowerCannonIce extends Tower {
     public void update(){
 
         for (Enemy e : getEnemies()) {
-            if(time > freezeTime) {
+            if(super.isInRange(e))
+                enemiesInRange.add(e);
+            if(e.time > freezeTime) {
                 e.setSpeed(e.originalSpeed);
-                time = 0;
+                e.time = 0;
             }
         }
 
-        time += Delta();
         super.update();
     }
 

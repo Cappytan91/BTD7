@@ -19,7 +19,7 @@ public class Enemy implements Entity{
 
     private ArrayList<Checkpoint> checkpoints;
     private int[] directions;
-    public float originalSpeed;
+    public float originalSpeed, time;
 
     public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health){
         this.texture = texture;
@@ -38,6 +38,7 @@ public class Enemy implements Entity{
         this.startHealth = health;
         this.first = true;
         this.alive = true;
+        this.time = 0f;
 
         this.checkpoints = new ArrayList<Checkpoint>();
         this.directions = new int[2];
@@ -68,6 +69,7 @@ public class Enemy implements Entity{
                 y += Delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed;
 
             }
+            time += Delta();
         }
     }
 

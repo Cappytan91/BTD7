@@ -17,6 +17,7 @@ public class Player {
     private boolean leftMouseButtonDown, rightMouseButtonDown, holdingTower;
     private Tower tempTower;
     public static int Cash, Lives;
+    private Tile tempMouseTile;
 
 
     public Player(TileGrid grid, WaveManager waveManager){
@@ -31,6 +32,7 @@ public class Player {
         this.rightMouseButtonDown = false;
         this.holdingTower = false;
         this.tempTower = null;
+        this.tempMouseTile = null;
         Cash = 0;
         Lives = 0;
     }
@@ -59,8 +61,8 @@ public class Player {
     public void update(){
         // Update holdingTower
         if(holdingTower){
-            tempTower.setX(getMouseTile().getX());
-            tempTower.setY(getMouseTile().getY());
+            tempTower.setX(tempMouseTile.getX());
+            tempTower.setY(tempMouseTile.getY());
             tempTower.draw();
         }
 
@@ -71,8 +73,11 @@ public class Player {
             t.updateEnemyList(waveManager.getCurrentWave().getEnemyList());
         }
 
+        if(Mouse.isButtonDown(0)){
+            tempMouseTile = getMouseTile();
+        }
         // Handle mouse input
-        if(!Mouse.isButtonDown(0) && !leftMouseButtonDown){
+        if(!Mouse.isButtonDown(0) && leftMouseButtonDown){
             placeTower();
         }
 
@@ -94,13 +99,15 @@ public class Player {
     }
 
     private void placeTower(){
-        Tile currentTile = getMouseTile();
+        Tile currentTile = tempMouseTile;
         if(holdingTower)
             if(!currentTile.isOccupied() && modifyCash(-tempTower.getCost())) {
                 currentTile.setOccupied(true);
                 towerList.add(tempTower);
                 holdingTower = false;
                 tempTower = null;
+            }else {
+
             }
 
     }
