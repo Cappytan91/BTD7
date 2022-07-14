@@ -40,6 +40,8 @@ public class Wave {
                 allEnemiesDead = false;
                 e.update();
                 e.draw();
+                if(e.isFrozen())
+                    e.drawFrozen();
             }else{
                 enemyList.remove(e);
             }

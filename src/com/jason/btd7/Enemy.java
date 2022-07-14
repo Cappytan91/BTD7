@@ -13,19 +13,20 @@ public class Enemy implements Entity{
     private int width, height, currentCheckpoint;
     private float speed, x, y, health, startHealth;
     private Tile startTile;
-    private Texture texture, healthBackground, healthForeground, healthBorder;
-    private boolean first, alive;
+    private Texture texture, healthBackground, healthForeground, healthBorder, freezeTexture;
+    private boolean first, alive, frozen;
     private TileGrid grid;
 
     private ArrayList<Checkpoint> checkpoints;
     private int[] directions;
-    public float originalSpeed, time;
+    public float originalSpeed, freezeClock;
 
     public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health){
         this.texture = texture;
         this.healthBackground = QuickLoad("healthBackground");
         this.healthForeground = QuickLoad("healthForeground");
         this.healthBorder = QuickLoad("healthBorder");
+        this.freezeTexture = QuickLoad("frozen");
         this.startTile = startTile;
         this.grid = grid;
         this.x = startTile.getX();
@@ -38,7 +39,8 @@ public class Enemy implements Entity{
         this.startHealth = health;
         this.first = true;
         this.alive = true;
-        this.time = 0f;
+        this.freezeClock = 0f;
+        this.frozen = false;
 
         this.checkpoints = new ArrayList<Checkpoint>();
         this.directions = new int[2];
@@ -69,7 +71,7 @@ public class Enemy implements Entity{
                 y += Delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed;
 
             }
-            time += Delta();
+            freezeClock += Delta();
         }
     }
 
@@ -197,6 +199,10 @@ public class Enemy implements Entity{
 
 
     }
+    public void drawFrozen(){
+        // Enemy Freeze texture
+        DrawQuadTex(freezeTexture, x, y, width, height);
+    }
 
     public int getWidth() {
         return width;
@@ -278,4 +284,11 @@ public class Enemy implements Entity{
         return alive;
     }
 
+    public boolean isFrozen() {
+        return frozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
+    }
 }

@@ -25,8 +25,10 @@ public class TowerCannonIce extends Tower {
     @Override
     public void shoot(Enemy target) {
         for (Enemy e : enemiesInRange) {
-            if(super.isInRange(e))
+            if(super.isInRange(e)) {
                 e.setSpeed(4);
+                e.setFrozen(true);
+            }
         }
     }
 
@@ -36,9 +38,10 @@ public class TowerCannonIce extends Tower {
         for (Enemy e : getEnemies()) {
             if(super.isInRange(e))
                 enemiesInRange.add(e);
-            if(e.time > freezeTime) {
+            if(e.freezeClock > freezeTime) {
+                e.setFrozen(false);
                 e.setSpeed(e.originalSpeed);
-                e.time = 0;
+                e.freezeClock = 0;
             }
         }
 
