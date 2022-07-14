@@ -7,6 +7,7 @@ import org.newdawn.slick.opengl.Texture;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.jason.btd7.Tower.TargetType.*;
 import static com.jason.btd7.helpers.Artist.*;
 
 import static com.jason.btd7.helpers.Clock.Delta;
@@ -22,6 +23,13 @@ public abstract class Tower implements Entity{
     public ArrayList<Projectile> projectiles;
     public TowerType type;
     public int turn;
+    enum TargetType{
+        First,
+        Last,
+        Close,
+        Strong;
+    }
+    public TargetType towerTargeting;
 
     public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies){
         this.type = type;
@@ -34,6 +42,8 @@ public abstract class Tower implements Entity{
         this.height = startTile.getHeight();
         this.enemies = enemies;
         this.targeted = false;
+        this.towerTargeting = First;
+
         this.timeSinceLastShot = 0f;
         this.projectiles = new ArrayList<Projectile>();
         this.firingSpeed = type.firingSpeed;
@@ -42,21 +52,70 @@ public abstract class Tower implements Entity{
     }
 
     private Enemy acquireTarget(){
-        Enemy closest = null;
 
-        // Arbitrary distance (larger than map) to help sort enemy distances
-        float closestDistance = 10000;
-        // Go through each enemy and return the nearest one
-        for(Enemy e: enemies){
-            if(isInRange(e) && findDistance(e) < closestDistance && e.isAlive()){
-                closestDistance = findDistance(e);
-                closest = e;
+        if(towerTargeting == Close) {
+
+            Enemy closest = null;
+
+            // Arbitrary distance (larger than map) to help sort enemy distances
+            float closestDistance = 10000;
+            // Go through each enemy and return the nearest one
+            for (Enemy e : enemies) {
+                if (isInRange(e) && findDistance(e) < closestDistance && e.isAlive()) {
+                    closestDistance = findDistance(e);
+                    closest = e;
+                }
             }
+            // If an enemy exists and is returned, targeted == true
+            if (closest != null)
+                targeted = true;
+            return closest;
+        }else if(towerTargeting == First){
+
+            Enemy first = null;
+
+            for (Enemy e : enemies) {
+                if(isInRange(e)) {
+                    first = e;
+                    break;
+                }
+            }
+
+            if (first != null)
+                targeted = true;
+            return first;
+
+        }else if(towerTargeting == Last){
+
+            Enemy last = null;
+
+            for (Enemy e : enemies) {
+                if(isInRange(e)) {
+                    last = e;
+                }
+            }
+
+            if (last != null)
+                targeted = true;
+            return last;
+
+        }else if(towerTargeting == Strong){
+
+            Enemy strongest = null;
+            float largestHP = 0;
+
+            for (Enemy e : enemies) {
+                if(isInRange(e) && e.getHealth() > largestHP && e.isAlive()) {
+                    largestHP = e.getHealth();
+                    strongest = e;
+                }
+            }
+
+            if (strongest != null)
+                targeted = true;
+            return strongest;
         }
-        // If an enemy exists and is returned, targeted == true
-        if(closest != null)
-            targeted = true;
-        return closest;
+        return null;
     }
 
     protected boolean isInRange(Enemy e){
@@ -88,16 +147,17 @@ public abstract class Tower implements Entity{
     }
 
     public void update(){
-        if(!targeted){
-            target = acquireTarget();
-        }else {
+
+        target = acquireTarget();
+        if(target != null) {
             angle = calculateAngle() - turn;
             if (timeSinceLastShot > firingSpeed) {
                 shoot(target);
                 timeSinceLastShot = 0;
             }
         }
-        if(target == null || target.isAlive() == false)
+
+        if(target == null || target.isAlive() == false || !isInRange(target))
             targeted = false;
 
         timeSinceLastShot += Delta();
