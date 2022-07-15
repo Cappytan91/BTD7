@@ -73,6 +73,10 @@ public class Player {
             t.updateEnemyList(waveManager.getCurrentWave().getEnemyList());
         }
 
+        for(Tower t : towerList){
+            t.towerMenu.update(t.getXPlace(), t.getYPlace());
+        }
+
         if(Mouse.isButtonDown(0)){
             tempMouseTile = getMouseTile();
         }

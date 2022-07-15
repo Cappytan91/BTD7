@@ -1,6 +1,7 @@
 package com.jason.btd7.UI;
 
 
+import com.jason.btd7.Tile;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
@@ -8,6 +9,7 @@ import org.newdawn.slick.opengl.Texture;
 import java.awt.*;
 import java.util.ArrayList;
 import static com.jason.btd7.helpers.Artist.*;
+import static com.jason.btd7.helpers.StateManager.game;
 
 public class UI {
 
@@ -80,6 +82,7 @@ public class UI {
         private ArrayList<Button> menuButtons;
         private int x, y, width, height,  buttonAmount, optionsWidth, optionsHeight, padding;
         private Texture texture;
+        private boolean visible;
 
         public Menu(String name, int x, int y, int width, int height, int optionsWidth, int optionsHeight){
             this.texture = null;
@@ -93,6 +96,7 @@ public class UI {
             this.padding = (width - (optionsWidth * TILE_SIZE))/ (optionsWidth + 1);
             this.buttonAmount = 0;
             this.menuButtons = new ArrayList<Button>();
+            this.visible = true;
         }
 
         public Menu(Texture texture, String name, int x, int y, int width, int height, int optionsWidth, int optionsHeight){
@@ -107,6 +111,7 @@ public class UI {
             this.padding = (width - (optionsWidth * TILE_SIZE))/ (optionsWidth + 1);
             this.buttonAmount = 0;
             this.menuButtons = new ArrayList<Button>();
+            this.visible = true;
         }
 
         public void addButton(Button b){
@@ -118,23 +123,24 @@ public class UI {
             setButton(b);
         }
 
-        public void quickAddGrid(String name, String buttonTextureName){
-            Button b = new Button(name, QuickLoad(buttonTextureName), 0, 0);
-            placeButtonGrid(b);
-        }
-
         public void hide(){
-            y -= 960;
-            for(Button b: menuButtons){
-                b.setY(b.getY() - 960);
+            if(visible) {
+                y -= 960;
+                for (Button b : menuButtons) {
+                    b.setY(b.getY() - 960);
+                }
+                visible = false;
             }
 
         }
 
         public void show(){
-            y += 960;
-            for(Button b: menuButtons){
-                b.setY(b.getY() + 960);
+            if(!visible) {
+                y += 960;
+                for (Button b : menuButtons) {
+                    b.setY(b.getY() + 960);
+                }
+                visible = true;
             }
 
         }
@@ -185,6 +191,67 @@ public class UI {
 
         public String getName(){
             return name;
+        }
+
+    }
+
+    public static class TowerMenu{
+
+        private int x, y, width, height;
+        private UI towerUI;
+        public UI.Menu towerMenu;
+        private String name;
+        private boolean leftMouseButtonDown;
+        enum Side{
+            Left,
+            Right;
+        }
+        private Side side;
+
+        public TowerMenu(String name, int x){
+
+            this.side = Side.Left;
+            if(x > 9)
+                side = Side.Right;
+
+            this.x = 1088;
+            if(side == Side.Right)
+                this.x = 0;
+
+            System.out.println(x);
+
+            this.y = 0;
+            this.width = 192;
+            this.height = 960;
+            this.name = name;
+            this.leftMouseButtonDown = false;
+            setupUI();
+
+        }
+
+        private void setupUI(){
+            towerUI = new UI();
+
+            towerUI.createMenuWTex(QuickLoad("towerMenuBG"), name, x, y, width, height, 1, 0);
+            towerMenu = towerUI.getMenu(name);
+
+
+        }
+
+        public void update(int x, int y){
+
+            if(x > 9)
+                side = Side.Right;
+
+            if(side == Side.Right)
+                this.x = 0;
+
+            towerUI.draw();
+            if(!game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown)
+                towerMenu.hide();
+            if(game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown)
+                towerMenu.show();
+            leftMouseButtonDown = Mouse.isButtonDown(0);
         }
 
     }

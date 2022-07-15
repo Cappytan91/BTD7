@@ -13,6 +13,7 @@ public class GruTank extends Tower {
     public GruTank(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies) {
         super(type, startTile, enemies);
         turn = 180;
+
     }
 
     @Override

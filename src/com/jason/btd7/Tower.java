@@ -2,6 +2,7 @@ package com.jason.btd7;
 
 
 
+import com.jason.btd7.UI.UI;
 import org.newdawn.slick.opengl.Texture;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public abstract class Tower implements Entity{
     private boolean targeted;
     public ArrayList<Projectile> projectiles;
     public TowerType type;
+    public UI.TowerMenu towerMenu;
     public int turn;
     enum TargetType{
         First,
@@ -30,6 +32,7 @@ public abstract class Tower implements Entity{
         Strong;
     }
     public TargetType towerTargeting;
+    protected boolean first;
 
     public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies){
         this.type = type;
@@ -43,6 +46,7 @@ public abstract class Tower implements Entity{
         this.enemies = enemies;
         this.targeted = false;
         this.towerTargeting = First;
+        this.first = true;
 
         this.timeSinceLastShot = 0f;
         this.projectiles = new ArrayList<Projectile>();
@@ -150,6 +154,11 @@ public abstract class Tower implements Entity{
     }
 
     public void update(){
+
+        if(first) {
+            this.towerMenu = new UI.TowerMenu(type + "Menu", getXPlace());
+            first = false;
+        }
 
         target = acquireTarget();
         if(target != null) {
