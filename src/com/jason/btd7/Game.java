@@ -18,7 +18,7 @@ public class Game {
     private WaveManager waveManager;
     private UI gameUI;
     private boolean leftMouseButtonDown;
-    private UI.Menu towerPickerMenu;
+    public UI.Menu towerPickerMenu, gameLayoutMenu;
     private Texture menuBackground;
 
     public Game(TileGrid grid){
@@ -35,14 +35,22 @@ public class Game {
 
     private void setupUI(){
         gameUI = new UI();
-        //towerPickerUI.addButton("CannonIce", "cannonIceGun", 0, 0);
-        //towerPickerUI.addButton("CannonBlue", "cannonGunBlue", 64, 0);
+
         gameUI.createMenu("TowerPicker", 1280, 100, 192, 960, 2, 0);
         towerPickerMenu = gameUI.getMenu("TowerPicker");
         towerPickerMenu.quickAdd("CannonIce", "cannonIceGun");
         towerPickerMenu.quickAdd("CannonBlue", "cannonGunBlue");
         towerPickerMenu.quickAdd("GruTank", "gruHead");
 
+        gameUI.createMenu("GameLayout", 0, 0, 1280, 960, 20, 0);
+        gameLayoutMenu = gameUI.getMenu("GameLayout");
+
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 20; j++) {
+                gameLayoutMenu.addButton(new Button(j + "," + i, QuickLoad("blankSquare"), j * 64, i * 64));
+                //System.out.println(j + "," + i);
+            }
+        }
     }
 
     private void updateUI(){

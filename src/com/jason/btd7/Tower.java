@@ -236,4 +236,13 @@ public abstract class Tower implements Entity{
     public CopyOnWriteArrayList<Enemy> getEnemies() {
         return enemies;
     }
+
+    public int getXPlace(){
+        return (int) x / TILE_SIZE;
+    }
+
+    public int getYPlace(){
+        return (int) y / TILE_SIZE;
+    }
+
 }
