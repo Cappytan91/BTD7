@@ -121,8 +121,12 @@ public class Player {
         holdingTower = true;
     }
 
-    private Tile getMouseTile(){
+    public Tile getMouseTile(){
         return grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE);
+    }
+
+    public ArrayList<Tower> getTowerList(){
+        return towerList;
     }
 
 

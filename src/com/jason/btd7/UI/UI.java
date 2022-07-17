@@ -2,6 +2,7 @@ package com.jason.btd7.UI;
 
 
 import com.jason.btd7.Tile;
+import com.jason.btd7.Tower;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
@@ -145,14 +146,6 @@ public class UI {
 
         }
 
-        private void placeButtonGrid(Button b){
-            if(optionsWidth != 0)
-                b.setY((buttonAmount / optionsWidth) * TILE_SIZE);
-            b.setX((buttonAmount % 2) * (padding + TILE_SIZE) + padding);
-            buttonAmount++;
-            menuButtons.add(b);
-        }
-
         private void setButton(Button b){
             if(optionsWidth != 0)
                 b.setY(y + (buttonAmount / optionsWidth) * TILE_SIZE);
@@ -235,6 +228,7 @@ public class UI {
             towerUI.createMenuWTex(QuickLoad("towerMenuBG"), name, x, y, width, height, 1, 0);
             towerMenu = towerUI.getMenu(name);
 
+            towerMenu.addButton(new Button("XButton", QuickLoad("xButton"), x + 1, y + 1));
 
         }
 
@@ -248,10 +242,25 @@ public class UI {
 
             towerUI.draw();
             if(!game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown)
-                towerMenu.hide();
-            if(game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown)
-                towerMenu.show();
+                if(side == Side.Left && !(Math.floor(Mouse.getX() / 64) >= 17))
+                    towerMenu.hide();
+                else if(side == Side.Right && !(Math.floor(Mouse.getX() / 64) <= 2))
+                    towerMenu.hide();
+
+            if(game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown) {
+                boolean OnAnotherTower = false;
+                ArrayList<Tower> towerList =  game.getPlayer().getTowerList();
+
+                for (Tower t : towerList) {
+                    if (t.towerMenu.towerMenu.visible)
+                        OnAnotherTower = true;
+                }
+                if(!OnAnotherTower)
+                    towerMenu.show();
+            }
+
             leftMouseButtonDown = Mouse.isButtonDown(0);
+
         }
 
     }
