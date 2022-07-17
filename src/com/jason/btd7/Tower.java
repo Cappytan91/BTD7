@@ -3,6 +3,7 @@ package com.jason.btd7;
 
 
 import com.jason.btd7.UI.UI;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.opengl.Texture;
 
 import java.util.ArrayList;
@@ -159,6 +160,9 @@ public abstract class Tower implements Entity{
             this.towerMenu = new UI.TowerMenu(type + "Menu", getXPlace());
             first = false;
         }
+
+        if(towerMenu.towerMenu.isButtonClicked("XButton") && Mouse.isButtonDown(0))
+            towerMenu.towerMenu.hide();
 
         target = acquireTarget();
         if(target != null) {
