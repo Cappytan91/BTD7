@@ -57,7 +57,7 @@ public class Game {
         gameUI.draw();
         gameUI.drawString(1310, 400, "Lives: " + Player.Lives);
         gameUI.drawString(1340, 500, "Cash: " + Player.Cash);
-        gameUI.drawString(1200, 10, framesInLastSecond + " fps");
+        gameUI.drawString(2, 10, framesInLastSecond + " fps");
         gameUI.drawString(1340, 600,  "Wave: " + waveManager.getWaveNumber());
 
         if(Mouse.next()) {

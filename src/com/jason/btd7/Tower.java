@@ -164,6 +164,9 @@ public abstract class Tower implements Entity{
         if(towerMenu.towerMenu.isButtonClicked("XButton") && Mouse.isButtonDown(0))
             towerMenu.towerMenu.hide();
 
+        if(towerMenu.towerMenu.visible)
+            DrawQuadTex(QuickLoad("range"), );
+
         target = acquireTarget();
         if(target != null) {
             angle = calculateAngle() - turn;

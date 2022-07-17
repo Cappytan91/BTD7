@@ -83,7 +83,7 @@ public class UI {
         private ArrayList<Button> menuButtons;
         private int x, y, width, height,  buttonAmount, optionsWidth, optionsHeight, padding;
         private Texture texture;
-        private boolean visible;
+        public boolean visible;
 
         public Menu(String name, int x, int y, int width, int height, int optionsWidth, int optionsHeight){
             this.texture = null;
@@ -229,6 +229,7 @@ public class UI {
             towerMenu = towerUI.getMenu(name);
 
             towerMenu.addButton(new Button("XButton", QuickLoad("xButton"), x + 1, y + 1));
+            towerMenu.addButton(new Button("ProfileImage", QuickLoad("water"), x + 32, y + 80, 128, 192));
 
         }
 
