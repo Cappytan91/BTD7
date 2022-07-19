@@ -61,6 +61,8 @@ public class Player {
     public void update(){
         // Update holdingTower
         if(holdingTower){
+
+            DrawQuadTex(tempTower.getRangeTexture(), tempTower.getX() + TILE_SIZE / 2 - tempTower.getRange(), tempTower.getY() + TILE_SIZE / 2 - tempTower.getRange(), tempTower.getRange() * 2.125f, tempTower.getRange() * 2.125f);
             tempTower.setX(tempMouseTile.getX());
             tempTower.setY(tempMouseTile.getY());
             tempTower.draw();

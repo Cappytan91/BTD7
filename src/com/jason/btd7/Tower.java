@@ -22,6 +22,7 @@ public abstract class Tower implements Entity{
     private Texture[] textures;
     private CopyOnWriteArrayList<Enemy> enemies;
     private boolean targeted;
+    private Texture rangeTexture;
     public ArrayList<Projectile> projectiles;
     public TowerType type;
     public UI.TowerMenu towerMenu;
@@ -38,6 +39,7 @@ public abstract class Tower implements Entity{
     public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies){
         this.type = type;
         this.textures = type.textures;
+        this.rangeTexture = QuickLoad("range");
         this.range = type.range;
         this.cost = type.cost;
         this.x = startTile.getX();
@@ -129,8 +131,9 @@ public abstract class Tower implements Entity{
     protected boolean isInRange(Enemy e){
         float xDistance = Math.abs(e.getX() + 32 - (x + 32));
         float yDistance = Math.abs(e.getY() + 32 - (y + 32));
+        double c = Math.sqrt((double) (xDistance * xDistance) + (yDistance * yDistance));
 
-        if(xDistance < range && yDistance < range)
+        if(c <= range)
             return true;
         return false;
     }
@@ -165,7 +168,7 @@ public abstract class Tower implements Entity{
             towerMenu.towerMenu.hide();
 
         if(towerMenu.towerMenu.visible)
-            DrawQuadTex(QuickLoad("range"), );
+            DrawQuadTex(rangeTexture, x + TILE_SIZE / 2 - range, y + TILE_SIZE / 2 - range, range * 2.125f, range * 2.125f);
 
         target = acquireTarget();
         if(target != null) {
@@ -261,4 +264,11 @@ public abstract class Tower implements Entity{
         return (int) y / TILE_SIZE;
     }
 
+    public int getRange() {
+        return range;
+    }
+
+    public Texture getRangeTexture(){
+        return rangeTexture;
+    }
 }
