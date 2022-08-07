@@ -131,13 +131,12 @@ public abstract class Tower implements Entity{
     }
 
     protected boolean isInRange(Enemy e){
-        float xDistance = Math.abs(e.getX() + 32 - (x + 32));
-        float yDistance = Math.abs(e.getY() + 32 - (y + 32));
-        double c = Math.sqrt((double) (xDistance * xDistance) + (yDistance * yDistance));
+        double xDif = e.getX() + 32 - (x + 32);
+        double yDif = e.getY() + 32 - (y + 32);
+        double distanceSquared = xDif * xDif + yDif * yDif;
+        boolean collision = distanceSquared < (range + TILE_SIZE / 2) * (range + TILE_SIZE / 2);
 
-        if(c <= range)
-            return true;
-        return false;
+        return collision;
     }
 
     private float findDistance(Enemy e){
