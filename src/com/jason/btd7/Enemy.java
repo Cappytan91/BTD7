@@ -10,8 +10,8 @@ import static com.jason.btd7.helpers.Clock.*;
 
 public class Enemy implements Entity{
 
-    private int width, height, currentCheckpoint;
-    private float speed, x, y, health, startHealth;
+    private int width, height, currentCheckpoint, trackLength;
+    private float speed, x, y, health, startHealth, percentComplete, distanceTraveled, xMoved, yMoved;
     private Tile startTile;
     private Texture texture, healthBackground, healthForeground, healthBorder, freezeTexture;
     private boolean first, alive, frozen;
@@ -31,6 +31,8 @@ public class Enemy implements Entity{
         this.grid = grid;
         this.x = startTile.getX();
         this.y = startTile.getY();
+        this.xMoved = 0f;
+        this.yMoved = 0f;
         this.width = width;
         this.height = height;
         this.speed = speed;
@@ -41,6 +43,8 @@ public class Enemy implements Entity{
         this.alive = true;
         this.freezeClock = 0f;
         this.frozen = false;
+        this.trackLength = 1;
+        this.percentComplete = 0f;
 
         this.checkpoints = new ArrayList<Checkpoint>();
         this.directions = new int[2];
@@ -70,7 +74,16 @@ public class Enemy implements Entity{
                 x += Delta() * checkpoints.get(currentCheckpoint).getxDirection() * speed;
                 y += Delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed;
 
+                xMoved += Math.abs(Delta() * checkpoints.get(currentCheckpoint).getxDirection() * speed);
+                yMoved += Math.abs(Delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed);
+
             }
+
+            distanceTraveled =  (xMoved + yMoved) / TILE_SIZE;
+
+            if(distanceTraveled != 0)
+                percentComplete =  distanceTraveled / trackLength;
+
             freezeClock += Delta();
         }
     }
@@ -105,7 +118,7 @@ public class Enemy implements Entity{
         while (cont){
             int[] currentD = findNextD(checkpoints.get(counter).getTile());
             // check if next direction / checkpoint exists, end after 20 checkpoints
-            if(currentD[0] == 2 || counter == 20){ // For some reason the map makes it turn around at the end, temp solution: set counter to amount of check points
+            if(currentD[0] == 2 || counter == 20){
                 cont = false;
             }else{
                 checkpoints.add(findNextC(checkpoints.get(counter).getTile(), directions = findNextD(checkpoints.get(counter).getTile())));
@@ -131,10 +144,12 @@ public class Enemy implements Entity{
                 found = true;
                 // move counter back 1 to find tile before new tiletype
                 counter -= 1;
+                trackLength -= 1;
                 next = grid.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter);
 
             }
             counter++;
+            trackLength++;
         }
         c = new Checkpoint(next, dir[0], dir[1]);
 
@@ -290,5 +305,9 @@ public class Enemy implements Entity{
 
     public void setFrozen(boolean frozen) {
         this.frozen = frozen;
+    }
+
+    public float getPercentComplete() {
+        return percentComplete;
     }
 }

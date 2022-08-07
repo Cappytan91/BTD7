@@ -48,7 +48,7 @@ public abstract class Tower implements Entity{
         this.height = startTile.getHeight();
         this.enemies = enemies;
         this.targeted = false;
-        this.towerTargeting = First;
+        this.towerTargeting = Last;
         this.first = true;
 
         this.timeSinceLastShot = 0f;
@@ -80,12 +80,12 @@ public abstract class Tower implements Entity{
         }else if(towerTargeting == First){
 
             Enemy first = null;
-
-            // Get First Enemy in the list and break (enemies automatically removed from list so enemy 0 always exists)
+            float farthestP = 0f;
+            // Get percent completed, then compare to the oldest percent, if >, then make that enemy 1st
             for (Enemy e : enemies) {
-                if(isInRange(e)) {
+                if(isInRange(e) && e.getPercentComplete() > farthestP) {
                     first = e;
-                    break;
+                    farthestP = e.getPercentComplete();
                 }
             }
 
@@ -96,11 +96,13 @@ public abstract class Tower implements Entity{
         }else if(towerTargeting == Last){
 
             Enemy last = null;
-
+            float lastP = 1000f;
             // Same as First, but keeps going to find the last enemy in range
+
             for (Enemy e : enemies) {
-                if(isInRange(e)) {
+                if(isInRange(e) && e.getPercentComplete() < lastP) {
                     last = e;
+                    lastP = e.getPercentComplete();
                 }
             }
 
