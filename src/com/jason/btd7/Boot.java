@@ -11,7 +11,7 @@ public class Boot {
 
     public Boot(){
         // Call Static method in Artist class to initialize OpenGL calls
-
+        //TestGit
         BeginSession();
 
         // Main game loop
