@@ -190,7 +190,7 @@ public class UI {
 
     public static class TowerMenu{
 
-        private int x, y, tX, tY, width, height;
+        private int x, y, width, height;
         private UI towerUI;
         public UI.Menu towerMenu;
         private String name;
@@ -237,6 +237,7 @@ public class UI {
 
         public void update(int x, int y){
             ArrayList<Tower> towerList =  game.getPlayer().getTowerList();
+
             if(x > 9)
                 side = Side.Right;
 
@@ -247,7 +248,7 @@ public class UI {
 
             for (Tower t : towerList) {
                 if (t.towerMenu.towerMenu.visible) {
-                    towerUI.drawString(64, 64, String.valueOf(t.towerTargeting[t.towerTargetingIndex]));
+                    towerUI.drawString(this.x + 64, 64, String.valueOf(t.towerTargeting[t.towerTargetingIndex]));
                 }
             }
 
