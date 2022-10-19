@@ -21,11 +21,12 @@ public abstract class Tower implements Entity{
     public Enemy target;
     private Texture[] textures;
     private CopyOnWriteArrayList<Enemy> enemies;
-    private boolean targeted;
+    private boolean targeted, leftMouseButtonDown;
     private Texture rangeTexture;
     public ArrayList<Projectile> projectiles;
     public TowerType type;
     public UI.TowerMenu towerMenu;
+    public UI targetUI;
     public int turn;
     enum TargetType{
         First,
@@ -33,7 +34,9 @@ public abstract class Tower implements Entity{
         Close,
         Strong;
     }
-    public TargetType towerTargeting;
+    public TargetType[] towerTargeting = {First, Last, Close, Strong};
+    public int towerTargetingIndex;
+
     protected boolean first;
 
     public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies){
@@ -48,7 +51,9 @@ public abstract class Tower implements Entity{
         this.height = startTile.getHeight();
         this.enemies = enemies;
         this.targeted = false;
-        this.towerTargeting = Last;
+        this.towerTargetingIndex = 0;
+        this.targetUI = new UI();
+        //this.towerTargeting = First;
         this.first = true;
 
         this.timeSinceLastShot = 0f;
@@ -60,7 +65,7 @@ public abstract class Tower implements Entity{
 
     private Enemy acquireTarget(){
 
-        if(towerTargeting == Close) {
+        if(towerTargeting[towerTargetingIndex] == Close) {
 
             Enemy closest = null;
 
@@ -77,7 +82,7 @@ public abstract class Tower implements Entity{
             if (closest != null)
                 targeted = true;
             return closest;
-        }else if(towerTargeting == First){
+        }else if(towerTargeting[towerTargetingIndex] == First){
 
             Enemy first = null;
             float farthestP = 0f;
@@ -93,7 +98,7 @@ public abstract class Tower implements Entity{
                 targeted = true;
             return first;
 
-        }else if(towerTargeting == Last){
+        }else if(towerTargeting[towerTargetingIndex] == Last){
 
             Enemy last = null;
             float lastP = 1000f;
@@ -110,7 +115,7 @@ public abstract class Tower implements Entity{
                 targeted = true;
             return last;
 
-        }else if(towerTargeting == Strong){
+        }else if(towerTargeting[towerTargetingIndex] == Strong){
 
             Enemy strongest = null;
             float largestHP = 0;
@@ -161,39 +166,62 @@ public abstract class Tower implements Entity{
     public void update(){
 
         if(first) {
-            this.towerMenu = new UI.TowerMenu(type + "Menu", getXPlace());
+            towerMenu = new UI.TowerMenu("Menu", getXPlace());
             first = false;
-        }
+        }else {
 
-        if(towerMenu.towerMenu.isButtonClicked("XButton") && Mouse.isButtonDown(0))
-            towerMenu.towerMenu.hide();
+            if (towerMenu.towerMenu.isButtonClicked("XButton") && Mouse.isButtonDown(0))
+                towerMenu.towerMenu.hide();
 
-        if(towerMenu.towerMenu.visible)
-            DrawQuadTex(rangeTexture, x + TILE_SIZE / 2 - range, y + TILE_SIZE / 2 - range, range * 2.125f, range * 2.125f);
-
-        target = acquireTarget();
-        if(target != null) {
-            angle = calculateAngle() - turn;
-            if (timeSinceLastShot > firingSpeed) {
-                shoot(target);
-                timeSinceLastShot = 0;
+            if (towerMenu.towerMenu.isButtonClicked("LButton") && !Mouse.isButtonDown(0) && leftMouseButtonDown) {
+                if (towerTargetingIndex == 0) {
+                    towerTargetingIndex = 3;
+                } else {
+                    towerTargetingIndex -= 1;
+                }
             }
+
+            if (towerMenu.towerMenu.isButtonClicked("RButton") && !Mouse.isButtonDown(0) && leftMouseButtonDown) {
+                if (towerTargetingIndex == 3) {
+                    towerTargetingIndex = 0;
+                } else {
+                    towerTargetingIndex += 1;
+                }
+            }
+
+            leftMouseButtonDown = Mouse.isButtonDown(0);
+
+            if (towerMenu.towerMenu.visible) {
+                DrawQuadTex(rangeTexture, x + TILE_SIZE / 2 - range, y + TILE_SIZE / 2 - range, range * 2.125f, range * 2.125f);
+
+            }
+            target = acquireTarget();
+            if (target != null) {
+
+                if (timeSinceLastShot > firingSpeed) {
+                    angle = calculateAngle() - turn;
+                    shoot(target);
+                    timeSinceLastShot = 0;
+                }
+            }
+
+            if (target == null || target.isAlive() == false || !isInRange(target))
+                targeted = false;
+
+            timeSinceLastShot += Delta();
+
+
+            draw();
         }
-
-        if(target == null || target.isAlive() == false || !isInRange(target))
-            targeted = false;
-
-        timeSinceLastShot += Delta();
-
-
-
-        draw();
     }
 
     public void draw() {
         DrawQuadTex(textures[0], x, y, width, height);
         // This makes the bullet under the shooting part & not the base
         for (Projectile p : projectiles) {
+            if(!p.isOnScreen()){
+                p.setAlive(false);
+            }
             p.update();
         }
         if(textures.length > 1)

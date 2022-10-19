@@ -190,7 +190,7 @@ public class UI {
 
     public static class TowerMenu{
 
-        private int x, y, width, height;
+        private int x, y, tX, tY, width, height;
         private UI towerUI;
         public UI.Menu towerMenu;
         private String name;
@@ -230,11 +230,13 @@ public class UI {
 
             towerMenu.addButton(new Button("XButton", QuickLoad("xButton"), x + 1, y + 1));
             towerMenu.addButton(new Button("ProfileImage", QuickLoad("water"), x + 32, y + 80, 128, 192));
+            towerMenu.addButton(new Button("LButton", QuickLoad("lButton"), x + (TILE_SIZE) - (TILE_SIZE / 4), y + (TILE_SIZE * 5)));
+            towerMenu.addButton(new Button("RButton", QuickLoad("rButton"), x + (2 * TILE_SIZE) - (TILE_SIZE / 4), y + (TILE_SIZE * 5)));
 
         }
 
         public void update(int x, int y){
-
+            ArrayList<Tower> towerList =  game.getPlayer().getTowerList();
             if(x > 9)
                 side = Side.Right;
 
@@ -242,6 +244,13 @@ public class UI {
                 this.x = 0;
 
             towerUI.draw();
+
+            for (Tower t : towerList) {
+                if (t.towerMenu.towerMenu.visible) {
+                    towerUI.drawString(64, 64, String.valueOf(t.towerTargeting[t.towerTargetingIndex]));
+                }
+            }
+
             if(!game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown)
                 if(side == Side.Left && !(Math.floor(Mouse.getX() / 64) >= 17))
                     towerMenu.hide();
@@ -250,7 +259,7 @@ public class UI {
 
             if(game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown) {
                 boolean OnAnotherTower = false;
-                ArrayList<Tower> towerList =  game.getPlayer().getTowerList();
+
 
                 for (Tower t : towerList) {
                     if (t.towerMenu.towerMenu.visible)

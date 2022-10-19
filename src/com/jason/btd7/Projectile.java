@@ -29,6 +29,14 @@ public abstract class Projectile implements Entity {
         calculateDirection();
     }
 
+    public boolean isOnScreen(){
+
+        if(x < 0 || x > WIDTH && y < 0 || y > HEIGHT){
+            return false;
+        }
+        return true;
+    }
+
     private void calculateDirection(){
         float totalAllowedMovement = 1.0f;
         float xDistanceFromTarget = Math.abs(target.getX() - x -TILE_SIZE / 4 + TILE_SIZE / 2);
