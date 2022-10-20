@@ -8,6 +8,8 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.StateManager.game;
@@ -125,25 +127,12 @@ public class UI {
         }
 
         public void hide(){
-            if(visible) {
-                y -= 960;
-                for (Button b : menuButtons) {
-                    b.setY(b.getY() - 960);
-                }
                 visible = false;
-            }
-
         }
 
         public void show(){
-            if(!visible) {
-                y += 960;
-                for (Button b : menuButtons) {
-                    b.setY(b.getY() + 960);
-                }
+            System.out.println("Work");
                 visible = true;
-            }
-
         }
 
         private void setButton(Button b){
@@ -247,8 +236,10 @@ public class UI {
             towerUI.draw();
 
             for (Tower t : towerList) {
-                if (t.towerMenu.towerMenu.visible) {
-                    towerUI.drawString(this.x + 64, 64, String.valueOf(t.towerTargeting[t.towerTargetingIndex]));
+                if (t.towerMenu.towerMenu.visible) {            // The font is the same as awtFont in UI class, and this gets the strings' length, so it can be used to center the text
+                    Font f = new Font("Times New Roman", Font.BOLD, 24);
+                    Rectangle2D r = f.getStringBounds(String.valueOf(t.towerTargeting[t.towerTargetingIndex]), new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT, RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT));
+                    towerUI.drawString(this.x + (int)(width - r.getWidth())/2, 32, String.valueOf(t.towerTargeting[t.towerTargetingIndex]));
                 }
             }
 
