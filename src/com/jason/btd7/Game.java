@@ -24,7 +24,7 @@ public class Game {
     public Game(TileGrid grid){
 
         this.grid = grid;
-        waveManager = new WaveManager(new Enemy(QuickLoad("bad"), grid.getTile(0, 12), grid, TILE_SIZE, TILE_SIZE, 60, 25), 1, 10);
+        waveManager = new WaveManager(new Enemy(QuickLoad("bloon"), grid.getTile(0, 12), grid, TILE_SIZE, TILE_SIZE, 60, 1), 1, 10);
         player = new Player(grid, waveManager);
         player.setup();
         this.leftMouseButtonDown = false;
@@ -88,4 +88,7 @@ public class Game {
         return player;
     }
 
+    public WaveManager getWaveManager() {
+        return waveManager;
+    }
 }

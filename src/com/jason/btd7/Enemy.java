@@ -58,7 +58,7 @@ public class Enemy implements Entity{
     }
 
     public void update(){
-        // Check if its the first time the class is updated, if so do nothing
+        // Check if it's the first time the class is updated, if so do nothing
         if(first){
             first = false;
         }else{

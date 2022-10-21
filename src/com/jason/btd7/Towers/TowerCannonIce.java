@@ -26,7 +26,7 @@ public class TowerCannonIce extends Tower {
     public void shoot(Enemy target) {
         for (Enemy e : enemiesInRange) {
             if(super.isInRange(e)) {
-                e.setSpeed(4);
+                e.setSpeed(0);
                 e.setFrozen(true);
             }
         }

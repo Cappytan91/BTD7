@@ -2,19 +2,23 @@ package com.jason.btd7;
 
 import org.newdawn.slick.opengl.Texture;
 
+import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Clock.*;
+import static com.jason.btd7.helpers.StateManager.game;
 
 public abstract class Projectile implements Entity {
 
     private Texture texture;
     private float x, y, speed, xVelocity, yVelocity;
-    private int damage, width, height;
+    private int damage, strikeThrough, width, height;
     private Enemy target;
     private boolean alive;
 
 
-    public Projectile(ProjectileType type, Enemy target, float x, float y, int width, int height){
+    public Projectile(ProjectileType type, Enemy target, float x, float y, int width, int height, int strikeThrough){
         this.texture = type.texture;
         this.x = x + TILE_SIZE / 4;
         this.y = y + TILE_SIZE / 4;
@@ -22,6 +26,7 @@ public abstract class Projectile implements Entity {
         this.height = height;
         this.speed = type.speed;
         this.damage = type.damage;
+        this.strikeThrough = strikeThrough;
         this.target = target;
         this.alive = true;
         this.xVelocity = 0f;
@@ -89,19 +94,26 @@ public abstract class Projectile implements Entity {
     }
 
     // Deal damage to Enemy
-    public void doDamage(){
-        target.damage(damage);
-        alive = false;
+    public void doDamage(Enemy enemy){
+        enemy.damage(damage);
+        strikeThrough -= 1;
+        if(strikeThrough <= 0)
+            alive = false;
     }
 
     public void update(){
+
         if(alive) {
+            CopyOnWriteArrayList<Enemy> enemyList = game.getWaveManager().getCurrentWave().getEnemyList();
             x += xVelocity * speed * Delta();
             y += yVelocity * speed * Delta();
-            if (CheckCollision(x, y, width, height,
-                    target.getX(), target.getY(), target.getWidth(), target.getHeight()) && target.isAlive()) {
-                doDamage();
+            for (Enemy e: enemyList) {
+                if (CheckCollision(x, y, width, height,
+                        e.getX(), e.getY(), e.getWidth(), e.getHeight()) && e.isAlive()) {
+                    doDamage(e);
+                }
             }
+
             draw();
         }
     }
