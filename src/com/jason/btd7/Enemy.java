@@ -20,8 +20,9 @@ public class Enemy implements Entity{
     private ArrayList<Checkpoint> checkpoints;
     private int[] directions;
     public float originalSpeed, freezeClock;
+    public int bloonLvl;
 
-    public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health){
+    public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health, int bloonLvl){
         this.texture = texture;
         this.healthBackground = QuickLoad("healthBackground");
         this.healthForeground = QuickLoad("healthForeground");
@@ -45,6 +46,7 @@ public class Enemy implements Entity{
         this.frozen = false;
         this.trackLength = 1;
         this.percentComplete = 0f;
+        this.bloonLvl = bloonLvl;
 
         this.checkpoints = new ArrayList<Checkpoint>();
         this.directions = new int[2];

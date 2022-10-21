@@ -4,6 +4,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.jason.btd7.helpers.Artist.TILE_SIZE;
 import static com.jason.btd7.helpers.Clock.*;
+import static com.jason.btd7.helpers.StateManager.game;
 
 public class Wave {
 
@@ -44,7 +45,10 @@ public class Wave {
                 if(e.isFrozen())
                     e.drawFrozen();
             }else{
+                if(e.bloonLvl - 1 > 0)
+                    enemyList.add(new Enemy(enemyType.getTexture(), game.getGrid().getTile((int) e.getX() / TILE_SIZE, (int) e.getY() / TILE_SIZE), enemyType.getTileGrid(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth(), e.bloonLvl - 1));
                 enemyList.remove(e);
+
             }
 
         }
@@ -54,7 +58,7 @@ public class Wave {
     }
 
     private void spawn(){
-        enemyList.add(new Enemy(enemyType.getTexture(), enemyType.getStartTile(), enemyType.getTileGrid(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth()));
+        enemyList.add(new Enemy(enemyType.getTexture(), enemyType.getStartTile(), enemyType.getTileGrid(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth(), 2));
         enemiesSpawned++;
     }
 
