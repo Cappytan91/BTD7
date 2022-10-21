@@ -76,8 +76,7 @@ public class Player {
         }
 
         for(Tower t : towerList){
-            if(t.towerMenu.towerMenu.visible)
-                t.towerMenu.update(t.getXPlace(), t.getYPlace());
+            t.towerMenu.update(t);
         }
 
         if(Mouse.isButtonDown(0)){

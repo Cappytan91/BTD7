@@ -224,32 +224,33 @@ public class UI {
 
         }
 
-        public void update(int x, int y){
-            ArrayList<Tower> towerList =  game.getPlayer().getTowerList();
+        public void update(Tower tower){
+            ArrayList<Tower> towerList = game.getPlayer().getTowerList();
+            if(tower.towerMenu.towerMenu.visible) {
+                if (tower.getXPlace() > 9)
+                    side = Side.Right;
 
-            if(x > 9)
-                side = Side.Right;
+                if (side == Side.Right)
+                    this.x = 0;
 
-            if(side == Side.Right)
-                this.x = 0;
+                towerUI.draw();
 
-            towerUI.draw();
-
-            for (Tower t : towerList) {
-                if (t.towerMenu.towerMenu.visible) {            // The font is the same as awtFont in UI class, and this gets the strings' length, so it can be used to center the text
-                    Font f = new Font("Times New Roman", Font.BOLD, 24);
-                    Rectangle2D r = f.getStringBounds(String.valueOf(t.towerTargeting[t.towerTargetingIndex]), new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT, RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT));
-                    towerUI.drawString(this.x + (int)(width - r.getWidth())/2, 32, String.valueOf(t.towerTargeting[t.towerTargetingIndex]));
+                for (Tower t : towerList) {
+                    if (t.towerMenu.towerMenu.visible) {            // The font is the same as awtFont in UI class, and this gets the strings' length, so it can be used to center the text
+                        Font f = new Font("Times New Roman", Font.BOLD, 24);
+                        Rectangle2D r = f.getStringBounds(String.valueOf(t.towerTargeting[t.towerTargetingIndex]), new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT, RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT));
+                        towerUI.drawString(this.x + (int) (width - r.getWidth()) / 2, 32, String.valueOf(t.towerTargeting[t.towerTargetingIndex]));
+                    }
                 }
             }
 
-            if(!game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown)
+            if(!game.gameLayoutMenu.isButtonClicked(tower.getXPlace()  + "," + tower.getYPlace()) && !Mouse.isButtonDown(0) && leftMouseButtonDown)
                 if(side == Side.Left && !(Math.floor(Mouse.getX() / 64) >= 17))
                     towerMenu.hide();
                 else if(side == Side.Right && !(Math.floor(Mouse.getX() / 64) <= 2))
                     towerMenu.hide();
 
-            if(game.gameLayoutMenu.isButtonClicked(x  + "," + y) && !Mouse.isButtonDown(0) && leftMouseButtonDown) {
+            if(game.gameLayoutMenu.isButtonClicked(tower.getXPlace()  + "," + tower.getYPlace()) && !Mouse.isButtonDown(0) && leftMouseButtonDown) {
                 boolean OnAnotherTower = false;
 
 
