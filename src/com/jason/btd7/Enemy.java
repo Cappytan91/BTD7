@@ -236,6 +236,7 @@ public class Enemy implements Entity{
     }
 
     private void die(){
+        DrawQuadTex(QuickLoad("pop"), x, y, width, height);
         alive = false;
 
     }
