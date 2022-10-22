@@ -14,7 +14,8 @@ public abstract class Projectile implements Entity {
     private Texture texture;
     private float x, y, speed, xVelocity, yVelocity;
     private int damage, strikeThrough, width, height;
-    private Enemy target;
+    private Enemy target, hit;
+    public CopyOnWriteArrayList<Enemy> unpopable;
     private boolean alive;
 
 
@@ -27,6 +28,7 @@ public abstract class Projectile implements Entity {
         this.speed = type.speed;
         this.damage = type.damage;
         this.strikeThrough = strikeThrough;
+        this.unpopable = new CopyOnWriteArrayList<Enemy>();
         this.target = target;
         this.alive = true;
         this.xVelocity = 0f;
@@ -110,7 +112,13 @@ public abstract class Projectile implements Entity {
             for (Enemy e: enemyList) {
                 if (CheckCollision(x, y, width, height,
                         e.getX(), e.getY(), e.getWidth(), e.getHeight()) && e.isAlive()) {
-                    doDamage(e);
+                    hit = e;
+                    for(Enemy enemy: unpopable){
+                        if(enemy != hit){
+                            doDamage(e);
+                        }
+                    }
+
                 }
             }
 
@@ -131,5 +139,8 @@ public abstract class Projectile implements Entity {
         alive = status;
     }
 
+    public Enemy getHit() {
+        return hit;
+    }
 
 }

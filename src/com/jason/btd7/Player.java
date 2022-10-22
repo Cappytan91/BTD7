@@ -22,7 +22,7 @@ public class Player {
 
     public Player(TileGrid grid, WaveManager waveManager){
         this.grid = grid;
-        this.types = new TileType[3];
+        this.types = new TileType[3];   // can be changed later for more types
         this.types[0] = TileType.Grass;
         this.types[1] = TileType.Dirt;
         this.types[2] = TileType.Water;

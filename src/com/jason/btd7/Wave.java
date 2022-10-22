@@ -10,7 +10,7 @@ public class Wave {
 
     private float timeSinceLastSpawn, spawnTime;
     private Enemy enemyType;
-    private CopyOnWriteArrayList<Enemy> enemyList;
+    private CopyOnWriteArrayList<Enemy> enemyList, unpopable;
     private int enemiesPerWave, enemiesSpawned;
     private boolean waveCompleted;
 
@@ -46,9 +46,16 @@ public class Wave {
                     e.drawFrozen();
             }else{
 
-                if(e.bloonLvl - 1 > 0)
+                if(e.bloonLvl - 1 > 0) {
                     enemyList.add(new Enemy(enemyType.getTexture(), e.getStartTile(), enemyType.getTileGrid(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth(), e.bloonLvl - 1, e.getX(), e.getY(), e.getCurrentCheckpoint()));
+                    for(Tower t: game.getPlayer().getTowerList()){
+                        for(Projectile p: t.projectiles){
+                            if(enemyList.get(enemyList.size() - 1) == p.getHit())
+                                p.unpopable.add(enemyList.get(enemyList.size() - 1));
+                        }
+                    }
 
+                }
                 enemyList.remove(e);
 
             }
