@@ -139,7 +139,7 @@ public abstract class Tower implements Entity{
         double xDif = e.getX() + 32 - (x + 32);
         double yDif = e.getY() + 32 - (y + 32);
         double distanceSquared = xDif * xDif + yDif * yDif;
-        boolean collision = distanceSquared < (range + TILE_SIZE / 2) * (range + TILE_SIZE / 2);
+        boolean collision = distanceSquared < (range + TILE_SIZE / 3) * (range + TILE_SIZE / 3);
 
         return collision;
     }

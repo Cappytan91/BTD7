@@ -59,6 +59,43 @@ public class Enemy implements Entity{
         populateCheckpointList();
     }
 
+    public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health, int bloonLvl, float x, float y, int currentCheckpoint){
+        this.texture = texture;
+        this.healthBackground = QuickLoad("healthBackground");
+        this.healthForeground = QuickLoad("healthForeground");
+        this.healthBorder = QuickLoad("healthBorder");
+        this.freezeTexture = QuickLoad("frozen");
+        this.startTile = startTile;
+        this.grid = grid;
+        this.x = x;
+        this.y = y;
+        this.xMoved = 0f;
+        this.yMoved = 0f;
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
+        this.originalSpeed = speed;
+        this.health = health;
+        this.startHealth = health;
+        this.first = true;
+        this.alive = true;
+        this.freezeClock = 0f;
+        this.frozen = false;
+        this.trackLength = 1;
+        this.percentComplete = 0f;
+        this.bloonLvl = bloonLvl;
+
+        this.checkpoints = new ArrayList<Checkpoint>();
+        this.directions = new int[2];
+        //x direction
+        this.directions[0] = 0;
+        //y direction
+        this.directions[1] = 0;
+        directions = findNextD(startTile);
+        this.currentCheckpoint = currentCheckpoint;
+        populateCheckpointList();
+    }
+
     public void update(){
         // Check if it's the first time the class is updated, if so do nothing
         if(first){
@@ -311,5 +348,9 @@ public class Enemy implements Entity{
 
     public float getPercentComplete() {
         return percentComplete;
+    }
+
+    public int getCurrentCheckpoint() {
+        return currentCheckpoint;
     }
 }
