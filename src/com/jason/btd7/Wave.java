@@ -1,5 +1,7 @@
 package com.jason.btd7;
 
+import org.lwjgl.Sys;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.jason.btd7.helpers.Artist.TILE_SIZE;
@@ -47,12 +49,9 @@ public class Wave {
             }else{
 
                 if(e.bloonLvl - 1 > 0) {
-                    enemyList.add(new Enemy(enemyType.getTexture(), e.getStartTile(), enemyType.getTileGrid(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth(), e.bloonLvl - 1, e.getX(), e.getY(), e.getCurrentCheckpoint()));
-                    for(Tower t: game.getPlayer().getTowerList()){
-                        for(Projectile p: t.projectiles){
-                            if(enemyList.get(enemyList.size() - 1) == p.getHit())
-                                p.unpopable.add(enemyList.get(enemyList.size() - 1));
-                        }
+                    for (int i = 0; i < e.kids.size(); i++) {
+                        enemyList.add(e.kids.get(i));
+                        //System.out.println("HI");
                     }
 
                 }

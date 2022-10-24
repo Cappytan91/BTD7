@@ -7,6 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Clock.*;
+import static com.jason.btd7.helpers.StateManager.game;
 
 
 public class Enemy implements Entity{
@@ -96,11 +97,16 @@ public class Enemy implements Entity{
         this.directions[1] = 0;
         directions = findNextD(startTile);
         this.currentCheckpoint = currentCheckpoint;
+        createKids();
         populateCheckpointList();
     }
 
     public void createKids(){
+        this.kids = new CopyOnWriteArrayList<Enemy>();
+        if(bloonLvl - 1 > 0) {
+            kids.add(new Enemy(texture, startTile, grid, TILE_SIZE, TILE_SIZE, speed, health , bloonLvl - 1, x, y, currentCheckpoint));
 
+        }
     }
 
     public void update(){
@@ -244,6 +250,11 @@ public class Enemy implements Entity{
 
     private void die(){
         DrawQuadTex(QuickLoad("pop"), x, y, width, height);
+        for(Enemy k: kids){
+            k.x = x;
+            k.y = y;
+            k.currentCheckpoint = currentCheckpoint;
+        }
         alive = false;
 
     }
