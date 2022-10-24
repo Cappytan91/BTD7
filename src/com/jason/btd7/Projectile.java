@@ -115,10 +115,11 @@ public abstract class Projectile implements Entity {
                     hit = e;
                     for(Enemy enemy: unpopable){
                         if(enemy != hit){
-                            doDamage(e);
-                        }
-                    }
 
+                        }
+
+                    }
+                    doDamage(e);
                 }
             }
 

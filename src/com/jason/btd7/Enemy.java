@@ -3,6 +3,7 @@ package com.jason.btd7;
 import org.newdawn.slick.opengl.Texture;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Clock.*;
@@ -21,6 +22,7 @@ public class Enemy implements Entity{
     private int[] directions;
     public float originalSpeed, freezeClock;
     public int bloonLvl;
+    public CopyOnWriteArrayList<Enemy> kids;
 
     public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health, int bloonLvl){
         this.texture = texture;
@@ -56,6 +58,7 @@ public class Enemy implements Entity{
         this.directions[1] = 0;
         directions = findNextD(startTile);
         this.currentCheckpoint = 0;
+        createKids();
         populateCheckpointList();
     }
 
@@ -94,6 +97,10 @@ public class Enemy implements Entity{
         directions = findNextD(startTile);
         this.currentCheckpoint = currentCheckpoint;
         populateCheckpointList();
+    }
+
+    public void createKids(){
+
     }
 
     public void update(){
