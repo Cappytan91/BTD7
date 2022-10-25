@@ -112,14 +112,21 @@ public abstract class Projectile implements Entity {
             for (Enemy e: enemyList) {
                 if (CheckCollision(x, y, width, height,
                         e.getX(), e.getY(), e.getWidth(), e.getHeight()) && e.isAlive()) {
+                    boolean onUnpop = false;
                     hit = e;
-                    for(Enemy enemy: unpopable){
-                        if(enemy != hit){
-
+                    for(Enemy k: e.kids){
+                        unpopable.add(k);
+                    }
+                    for(Enemy u: unpopable){
+                        if(u == hit){
+                            onUnpop = true;
+                            break;
                         }
 
                     }
-                    doDamage(e);
+                    if(!onUnpop) {
+                        doDamage(e);
+                    }
                 }
             }
 

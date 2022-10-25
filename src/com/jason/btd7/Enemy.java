@@ -63,7 +63,7 @@ public class Enemy implements Entity{
         populateCheckpointList();
     }
 
-    public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health, int bloonLvl, float x, float y, int currentCheckpoint){
+    public Enemy(Texture texture, Tile startTile,TileGrid grid, int width, int height, float speed, float health, int bloonLvl, float x, float y, int currentCheckpoint, float xMoved, float yMoved){
         this.texture = texture;
         this.healthBackground = QuickLoad("healthBackground");
         this.healthForeground = QuickLoad("healthForeground");
@@ -73,8 +73,8 @@ public class Enemy implements Entity{
         this.grid = grid;
         this.x = x;
         this.y = y;
-        this.xMoved = 0f;
-        this.yMoved = 0f;
+        this.xMoved = xMoved;
+        this.yMoved = yMoved;
         this.width = width;
         this.height = height;
         this.speed = speed;
@@ -86,7 +86,7 @@ public class Enemy implements Entity{
         this.freezeClock = 0f;
         this.frozen = false;
         this.trackLength = 1;
-        this.percentComplete = 0f;
+        this.percentComplete = percentComplete;
         this.bloonLvl = bloonLvl;
 
         this.checkpoints = new ArrayList<Checkpoint>();
@@ -104,7 +104,7 @@ public class Enemy implements Entity{
     public void createKids(){
         this.kids = new CopyOnWriteArrayList<Enemy>();
         if(bloonLvl - 1 > 0) {
-            kids.add(new Enemy(texture, startTile, grid, TILE_SIZE, TILE_SIZE, speed, health , bloonLvl - 1, x, y, currentCheckpoint));
+            kids.add(new Enemy(QuickLoad("bloon"), startTile, grid, TILE_SIZE, TILE_SIZE, speed, health , bloonLvl - 1, x, y, currentCheckpoint, xMoved, yMoved));
 
         }
     }
@@ -129,6 +129,12 @@ public class Enemy implements Entity{
                 xMoved += Math.abs(Delta() * checkpoints.get(currentCheckpoint).getxDirection() * speed);
                 yMoved += Math.abs(Delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed);
 
+                for(Enemy k: kids){   // Updates Kids (could make a temp kid that has zero health [so it auto dies] to have less lag)
+                    k.x = x;
+                    k.y = y;
+                    k.currentCheckpoint = currentCheckpoint;
+                    k.percentComplete = percentComplete;
+                }
             }
 
             distanceTraveled =  (xMoved + yMoved) / TILE_SIZE;
@@ -250,11 +256,6 @@ public class Enemy implements Entity{
 
     private void die(){
         DrawQuadTex(QuickLoad("pop"), x, y, width, height);
-        for(Enemy k: kids){
-            k.x = x;
-            k.y = y;
-            k.currentCheckpoint = currentCheckpoint;
-        }
         alive = false;
 
     }

@@ -86,11 +86,13 @@ public abstract class Tower implements Entity{
 
             Enemy first = null;
             float farthestP = 0f;
+            int farthestCP = 0;
             // Get percent completed, then compare to the oldest percent, if >, then make that enemy 1st
             for (Enemy e : enemies) {
-                if(isInRange(e) && e.getPercentComplete() > farthestP) {
+                if(isInRange(e) && e.getPercentComplete() > farthestP && e.getCurrentCheckpoint() > farthestCP) {
                     first = e;
                     farthestP = e.getPercentComplete();
+                    farthestCP = e.getCurrentCheckpoint();
                 }
             }
 
@@ -118,12 +120,12 @@ public abstract class Tower implements Entity{
         }else if(towerTargeting[towerTargetingIndex] == Strong){
 
             Enemy strongest = null;
-            float largestHP = 0;
+            int largestBL = 0;
 
             // If enemy HP is larger than current largestHP, make largest, run until all enemies in range are checked
             for (Enemy e : enemies) {
-                if(isInRange(e) && e.getHealth() > largestHP && e.isAlive()) {
-                    largestHP = e.getHealth();
+                if(isInRange(e) && e.getHealth() > largestBL && e.isAlive()) {
+                    largestBL = e.bloonLvl;
                     strongest = e;
                 }
             }
