@@ -302,4 +302,8 @@ public abstract class Tower implements Entity{
     public Texture getRangeTexture(){
         return rangeTexture;
     }
+
+    public void setEnemies(CopyOnWriteArrayList<Enemy> enemies){
+        this.enemies = enemies;
+    }
 }

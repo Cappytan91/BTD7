@@ -49,11 +49,11 @@ public class Wave {
             }else{
 
                 if(e.bloonLvl - 1 > 0) {
-                    for (int i = 0; i < e.kids.size(); i++) {
-                        enemyList.add(e.kids.get(i));
-                        //System.out.println("HI");
+                    //System.out.println("HI");
+                    enemyList.addAll(e.kids);
+                    for(Tower t: game.getPlayer().getTowerList()){
+                        t.setEnemies(enemyList);
                     }
-
                 }
                 enemyList.remove(e);
 
