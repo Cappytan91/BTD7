@@ -129,21 +129,13 @@ public class Enemy implements Entity{
                 xMoved += Math.abs(Delta() * checkpoints.get(currentCheckpoint).getxDirection() * speed);
                 yMoved += Math.abs(Delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed);
 
-                for(Enemy k: kids){   // Updates Kids (could make a temp kid that has zero health [so it auto dies] to have less lag)
-                    k.x = x;
-                    k.y = y;
-                    k.currentCheckpoint = currentCheckpoint;
-                    k.percentComplete = percentComplete;
-                    k.xMoved = xMoved;
-                    k.yMoved = yMoved;
-                }
+
             }
 
             distanceTraveled =  (xMoved + yMoved) / TILE_SIZE;
 
             if(distanceTraveled != 0)
                 percentComplete =  distanceTraveled / trackLength;
-            System.out.println(distanceTraveled);
 
             freezeClock += Delta();
         }
@@ -252,6 +244,14 @@ public class Enemy implements Entity{
     public void damage(int amount){
         health -= amount;
         if(health <= 0) {
+            for(Enemy k: kids){   // Updates Kids (could make a temp kid that has zero health [so it auto dies] to have less lag)
+                k.x = x;
+                k.y = y;
+                k.currentCheckpoint = currentCheckpoint;
+                k.percentComplete = percentComplete;
+                k.xMoved = xMoved;
+                k.yMoved = yMoved;
+            }
             die();
             Player.modifyCash(5);
         }
