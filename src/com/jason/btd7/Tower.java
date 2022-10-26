@@ -6,6 +6,7 @@ import com.jason.btd7.UI.UI;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.opengl.Texture;
 
+import javax.sql.rowset.spi.SyncFactory;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -86,13 +87,12 @@ public abstract class Tower implements Entity{
 
             Enemy first = null;
             float farthestP = 0f;
-            int farthestCP = 0;
             // Get percent completed, then compare to the oldest percent, if >, then make that enemy 1st
             for (Enemy e : enemies) {
-                if(isInRange(e) && e.getPercentComplete() > farthestP && e.getCurrentCheckpoint() > farthestCP) {
+                if(isInRange(e) && e.getPercentComplete() > farthestP ) {
                     first = e;
                     farthestP = e.getPercentComplete();
-                    farthestCP = e.getCurrentCheckpoint();
+
                 }
             }
 
@@ -209,7 +209,6 @@ public abstract class Tower implements Entity{
 
             if (target == null || target.isAlive() == false || !isInRange(target))
                 targeted = false;
-
             timeSinceLastShot += Delta();
 
 

@@ -134,6 +134,8 @@ public class Enemy implements Entity{
                     k.y = y;
                     k.currentCheckpoint = currentCheckpoint;
                     k.percentComplete = percentComplete;
+                    k.xMoved = xMoved;
+                    k.yMoved = yMoved;
                 }
             }
 
@@ -141,6 +143,7 @@ public class Enemy implements Entity{
 
             if(distanceTraveled != 0)
                 percentComplete =  distanceTraveled / trackLength;
+            System.out.println(distanceTraveled);
 
             freezeClock += Delta();
         }

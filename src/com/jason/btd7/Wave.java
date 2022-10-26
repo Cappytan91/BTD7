@@ -54,6 +54,7 @@ public class Wave {
                     for(Tower t: game.getPlayer().getTowerList()){
                         t.setEnemies(enemyList);
                     }
+                    allEnemiesDead = false;
                 }
                 enemyList.remove(e);
 
