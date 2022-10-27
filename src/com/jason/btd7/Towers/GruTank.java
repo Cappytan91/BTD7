@@ -2,6 +2,7 @@ package com.jason.btd7.Towers;
 
 import com.jason.btd7.Enemy;
 import com.jason.btd7.Projectiles.ProjectileCannonball;
+import com.jason.btd7.Projectiles.ProjectileMinion;
 import com.jason.btd7.Tile;
 import com.jason.btd7.Tower;
 import com.jason.btd7.TowerType;
@@ -18,6 +19,6 @@ public class GruTank extends Tower {
 
     @Override
     public void shoot(Enemy target) {
-        super.projectiles.add(new ProjectileCannonball(super.type.projectileType, super.target, super.getX(), super.getY(), 32, 32));
+        super.projectiles.add(new ProjectileMinion(super.type.projectileType, super.target, super.getX(), super.getY(), 32, 32));
     }
 }

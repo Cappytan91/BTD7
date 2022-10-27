@@ -8,7 +8,8 @@ public enum ProjectileType {
 
 
     CannonBall(QuickLoad("bullet"), 10, 1000),
-    IceBall(QuickLoad("iceBullet"), 2, 1000);
+    IceBall(QuickLoad("iceBullet"), 2, 1000),
+    Minion(QuickLoad("minion"), 10, 100);
 
     Texture texture;
     public int damage;

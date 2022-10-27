@@ -11,7 +11,7 @@ import static com.jason.btd7.helpers.StateManager.game;
 
 public abstract class Projectile implements Entity {
 
-    private Texture texture;
+    protected Texture texture;
     private float x, y, speed, xVelocity, yVelocity;
     private int damage, strikeThrough, width, height;
     private Enemy target, hit;
@@ -42,6 +42,10 @@ public abstract class Projectile implements Entity {
             return false;
         }
         return true;
+    }
+    public float calculateAngle(){
+        double angleTemp = Math.atan2(target.getY() - y, target.getX() - x);
+        return (float) Math.toDegrees(angleTemp);
     }
 
     private void calculateDirection(){
