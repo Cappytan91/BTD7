@@ -7,7 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.jason.btd7.helpers.Artist.*;
 import static com.jason.btd7.helpers.Clock.*;
-import static com.jason.btd7.helpers.StateManager.game;
+import com.jason.btd7.sounds.pop;
 
 
 public class Enemy implements Entity{
