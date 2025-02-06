@@ -137,7 +137,9 @@ public class Enemy implements Entity{
             if(distanceTraveled != 0)
                 percentComplete =  distanceTraveled / trackLength;
 
-            freezeClock += Delta();
+            if(frozen) {
+                freezeClock += Delta();
+            }
         }
     }
 
