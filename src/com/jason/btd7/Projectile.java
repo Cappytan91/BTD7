@@ -48,7 +48,7 @@ public abstract class Projectile implements Entity {
         return (float) Math.toDegrees(angleTemp);
     }
 
-    private void calculateDirection(){
+    protected void calculateDirection(){
         float totalAllowedMovement = 1.0f;
         float xDistanceFromTarget = Math.abs(target.getX() - x -TILE_SIZE / 4 + TILE_SIZE / 2);
         float yDistanceFromTarget = Math.abs(target.getY() - y - TILE_SIZE / 4 + TILE_SIZE / 2);
@@ -145,6 +145,10 @@ public abstract class Projectile implements Entity {
 
     public Enemy getTarget(){
         return target;
+    }
+
+    public void setTarget(Enemy target) {
+        this.target = target;
     }
 
     public void setAlive(boolean status){

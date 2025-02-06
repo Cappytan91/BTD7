@@ -19,6 +19,6 @@ public class GruTank extends Tower {
 
     @Override
     public void shoot(Enemy target) {
-        super.projectiles.add(new ProjectileMinion(super.type.projectileType, super.target, super.getX(), super.getY(), 32, 32));
+        super.projectiles.add(new ProjectileMinion(super.type.projectileType, super.target, super.getX(), super.getY(), 32, 32, getEnemies()));
     }
 }
